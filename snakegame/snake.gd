@@ -39,10 +39,6 @@ func _process(delta: float) -> void:
 		else:
 			move_body()
 			points[0].global_position += direction
-	
-	if Input.is_action_just_pressed("ui_cancel"):
-		add_box()
-	
 
 
 func _physics_process(delta: float) -> void:
@@ -67,6 +63,7 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	var box = BoxShape3D.new()
 	box.size *= Vector3.ONE * .99
 	query.shape = box
+	query.collide_with_areas = true
 	
 	var rotation = Basis().rotated(Vector3.UP, camera.rotation.y)
 	query.transform = Transform3D(rotation, new_position)

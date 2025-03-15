@@ -91,7 +91,6 @@ environment = SubResource("Environment_q8pox")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.920855, 0, -0.389904, 0.337667, 0.5, 0.797484, 0.194952, -0.866026, 0.460428, 0, 0, 0)
 rotation_order = 4
-light_energy = 0.5
 shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="."]

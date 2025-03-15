@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpofqrkflt3nr"]
+
+[ext_resource type="Script" uid="uid://c883qxoypb2x8" path="res://grow!.gd" id="1_rktpi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oi51e"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lwho3"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l8tis"]
+radius = 0.3
+
+[node name="GROW!" type="Area3D"]
+script = ExtResource("1_rktpi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_oi51e")
+mesh = SubResource("SphereMesh_lwho3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_l8tis")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
