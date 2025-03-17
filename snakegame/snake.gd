@@ -1,3 +1,4 @@
+class_name Player
 @tool
 extends CharacterBody3D
 
