@@ -92,9 +92,10 @@ func add_box():
 	if points.size() > 2:
 		direction = points[points.size() - 1].global_position.direction_to(points[points.size() - 2].global_position)
 	
+	var next_spawnpoint = spawnpoint
 	if points.size() > 0:
-		spawnpoint = points[points.size() - 1].global_position
-	var pos = spawnpoint - (size * direction)
+		next_spawnpoint = points[points.size() - 1].global_position
+	var pos = next_spawnpoint - (size * direction)
 	
 	#print(spawnpoint, " | ", direction, " | ", pos)
 	#body.global_position = pos
