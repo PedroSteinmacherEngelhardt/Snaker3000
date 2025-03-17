@@ -1,10 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbomkv821oea4"]
+[gd_scene load_steps=6 format=3 uid="uid://dbomkv821oea4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28pbb"]
+albedo_color = Color(0.32549, 0.223529, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_28pbb"]
+material = SubResource("StandardMaterial3D_28pbb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yni62"]
 margin = 0.0
 size = Vector3(0.99, 0.99, 0.99)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yni62"]
+albedo_color = Color(0.164706, 0.45098, 0.117647, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gl4yn"]
+material = SubResource("StandardMaterial3D_yni62")
 
 [node name="Node3D" type="Node3D"]
 
@@ -15,4 +25,13 @@ skeleton = NodePath("StaticBody3D")
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_yni62")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gl4yn")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
 shape = SubResource("BoxShape3D_yni62")
