@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnqa4m78arnjq"]
+
+[ext_resource type="Script" uid="uid://bj6du45mjc1ty" path="res://SuneikoTreisMill.gd" id="1_h7dwb"]
+
+[node name="SuneikoTreisMill" type="CharacterBody3D"]
+script = ExtResource("1_h7dwb")

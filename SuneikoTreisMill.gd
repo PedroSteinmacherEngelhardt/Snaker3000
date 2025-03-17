@@ -4,7 +4,6 @@ extends CharacterBody3D
 var points = []
 var size = 1
 
-@export var spawnpoint : Node3D
 @export var camera: Camera
 
 var material = preload("res://snakegame/new_standard_material_3d.tres")
