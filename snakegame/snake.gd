@@ -29,6 +29,8 @@ func _process(delta: float) -> void:
 		direction.z -= 1
 	elif Input.is_action_just_pressed("space"):
 		direction.y +=1
+	elif Input.is_action_just_pressed("shift"):
+		direction.y -=1
 	
 	direction = -direction.rotated(Vector3.UP, camera.rotation.y).normalized()
 	direction.y *=-1
@@ -46,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if not is_on_floor():
-		velocity.y -= 0.1
+		velocity += get_gravity() * delta * 2
 	move_and_slide()
 
 
@@ -63,7 +65,6 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	var box = BoxShape3D.new()
 	box.size *= Vector3.ONE * .99
 	query.shape = box
-	query.collide_with_areas = true
 	
 	var rotation = Basis().rotated(Vector3.UP, camera.rotation.y)
 	query.transform = Transform3D(rotation, new_position)
