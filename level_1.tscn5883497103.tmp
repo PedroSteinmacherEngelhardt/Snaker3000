@@ -70,7 +70,6 @@ metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 [node name="SuneikoTreisMill" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_mxc8w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.11545, 0)
 camera = NodePath("../Camera")
-initial_size = 3
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("5_e6u7d")

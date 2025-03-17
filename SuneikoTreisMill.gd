@@ -1,17 +1,19 @@
 @tool
+
+class_name SuneikoTreisMill
 extends CharacterBody3D
 
 var points = []
 var size = 1
 
 @export var camera: Camera
+@export var initial_size : int = 1
+@onready var spawnpoint := global_position
 
 var material = preload("res://snakegame/new_standard_material_3d.tres")
 
 func _ready():
-	add_box()
-	add_box()
-	add_box()
+	spawn()
 
 
 func _process(delta: float) -> void:
@@ -90,12 +92,11 @@ func add_box():
 	if points.size() > 2:
 		direction = points[points.size() - 1].global_position.direction_to(points[points.size() - 2].global_position)
 	
-	var init_pos = global_position
 	if points.size() > 0:
-		init_pos = points[points.size() - 1].global_position
-	var pos = init_pos - (size * direction)
+		spawnpoint = points[points.size() - 1].global_position
+	var pos = spawnpoint - (size * direction)
 	
-	#print(init_pos, " | ", direction, " | ", pos)
+	#print(spawnpoint, " | ", direction, " | ", pos)
 	#body.global_position = pos
 	
 	points.append(collision)
@@ -103,3 +104,15 @@ func add_box():
 	collision.add_child(body)
 	collision.global_position = pos
 	collision.rotation.y = camera.rotation.y
+	
+	
+func got_dunked():
+	for point in points:
+		point.queue_free()
+	points.clear()
+	spawn()
+
+
+func spawn():
+	for n in range(initial_size):
+		add_box()
