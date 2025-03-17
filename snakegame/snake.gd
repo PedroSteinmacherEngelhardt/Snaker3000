@@ -1,5 +1,6 @@
-class_name Player
 @tool
+
+class_name Player
 extends CharacterBody3D
 
 var points = []
