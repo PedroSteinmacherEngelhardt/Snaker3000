@@ -33,46 +33,53 @@ const _actions_map: Dictionary[String, Vector3] = {
 	"move_down": Vector3.DOWN,
 }
 
-var is_moving: bool = false
+
+var _is_moving: bool = false
 
 
 func _input(event):
 	for action in _actions_map.keys():
 		if event.is_action_pressed(action):
 			_pressed_actions[action] = null
+			_input_buffer.append(_actions_map[action])
 			_start_movement(_move)
 		if event.is_action_released(action):
 			_pressed_actions.erase(action)
 
 
+var _input_buffer = []
+
+
 func _start_movement(handle_movement: Callable):
-	if is_moving:
+	if _is_moving:
 		return
 	
-	is_moving = true
+	_is_moving = true
 	
 	if $Timer.is_stopped():
 		var direction = _get_direction()
 		if not direction:
-			is_moving = false
+			_is_moving = false
 			return
 		
 		handle_movement.call(direction)
 		
 		$Timer.start()
 		
-	while not _pressed_actions.is_empty():
+	while not _input_buffer.is_empty() or not _pressed_actions.is_empty():
 		await $Timer.timeout
-		
-		var direction = _get_direction()
-		if not direction:
-			break
-		
-		handle_movement.call(direction)
+		if not _input_buffer.is_empty():
+			handle_movement.call(_input_buffer.pop_back())
+		else:
+			var direction = _get_direction()
+			if not direction:
+				break
+				
+			handle_movement.call(direction)
 		
 		$Timer.start()
 		
-	is_moving = false
+	_is_moving = false
 
 
 func _move(direction: Vector3):
