@@ -9,47 +9,84 @@ var size = 1
 
 var material = preload("res://snakegame/new_standard_material_3d.tres")
 
+
+func _get_direction():
+	var pressed_actions = _pressed_actions.keys()
+	return null if pressed_actions.is_empty() else _actions_map[pressed_actions.front()]
+
+
 func _ready():
+	_disable_process(Engine.is_editor_hint())
 	add_box()
 	add_box()
 	add_box()
 
 
-func _process(delta: float) -> void:
-	if Engine.is_editor_hint():
+var _pressed_actions: = {}
+
+const _actions_map: Dictionary[String, Vector3] = {
+	"move_north": Vector3.FORWARD,
+	"move_south": Vector3.BACK,
+	"move_west": Vector3.LEFT,
+	"move_east": Vector3.RIGHT,
+	"move_up": Vector3.UP,
+	"move_down": Vector3.DOWN,
+}
+
+var is_moving: bool = false
+
+
+func _input(event):
+	for action in _actions_map.keys():
+		if event.is_action_pressed(action):
+			_pressed_actions[action] = null
+			_start_movement(_move)
+		if event.is_action_released(action):
+			_pressed_actions.erase(action)
+
+
+func _start_movement(handle_movement: Callable):
+	if is_moving:
 		return
 	
-	var direction = Vector3.ZERO
-	if Input.is_action_just_pressed("left"):
-		direction.x += 1
-	elif Input.is_action_just_pressed("right"):
-		direction.x -= 1
-	elif Input.is_action_just_pressed("forward"):
-		direction.z += 1
-	elif Input.is_action_just_pressed("backward"):
-		direction.z -= 1
-	elif Input.is_action_just_pressed("space"):
-		direction.y +=1
-	elif Input.is_action_just_pressed("shift"):
-		direction.y -=1
+	is_moving = true
 	
-	direction = -direction.rotated(Vector3.UP, camera.rotation.y).normalized()
-	direction.y *=-1
-	
-	if direction:
-		if will_collide_if_moved(points[0].global_position + direction):
-			camera.add_trauma(.5)
-		else:
-			move_body()
-			points[0].global_position += direction
+	if $Timer.is_stopped():
+		var direction = _get_direction()
+		if not direction:
+			is_moving = false
+			return
+		
+		handle_movement.call(direction)
+		
+		$Timer.start()
+		
+	while not _pressed_actions.is_empty():
+		await $Timer.timeout
+		
+		var direction = _get_direction()
+		if not direction:
+			break
+		
+		handle_movement.call(direction)
+		
+		$Timer.start()
+		
+	is_moving = false
 
 
-func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
-	
+func _move(direction: Vector3):
+	if will_collide_if_moved(points[0].global_position + direction):
+		camera.add_trauma(.5)
+	else:
+		move_body()
+		points[0].global_position += direction
+
+
+func _physics_process(delta):
 	if not is_on_floor():
-		velocity += get_gravity() * delta * 2
+		velocity = velocity + get_gravity() * delta
+		
 	move_and_slide()
 
 
@@ -104,3 +141,7 @@ func add_box():
 	collision.add_child(body)
 	collision.global_position = pos
 	collision.rotation.y = camera.rotation.y
+
+
+func _disable_process(value: bool):
+	process_mode = Node.PROCESS_MODE_DISABLED if value else Node.PROCESS_MODE_ALWAYS

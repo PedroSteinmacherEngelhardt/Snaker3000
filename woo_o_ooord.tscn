@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://diohxew8egcmn"]
 
-[ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snakegame/snake.gd" id="1_2mlct"]
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://meshlibari.tres" id="1_oi51e"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://snakegame/test_word.gdshader" id="2_k7ipi"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_cbhfs"]
 [ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://grow!.tscn" id="4_lp74u"]
+[ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snakegame/snake.gd" id="5_oi51e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
 shader = ExtResource("2_k7ipi")
@@ -83,6 +83,11 @@ transform = Transform3D(1, 0, 0, 0, 0.928356, 0.371692, 0, -0.371692, 0.928356, 
 script = ExtResource("3_cbhfs")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
-[node name="Snake" type="CharacterBody3D" parent="."]
+[node name="Snake" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.553441, 0)
-script = ExtResource("1_2mlct")
+script = ExtResource("5_oi51e")
+camera = NodePath("../Camera")
+
+[node name="Timer" type="Timer" parent="Snake"]
+wait_time = 0.2
