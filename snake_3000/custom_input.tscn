@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu1kougdu5g3k"]
+
+[ext_resource type="Script" uid="uid://bxaed8fpayo8u" path="res://snake_3000/custom_input.gd" id="1_ljjxr"]
+
+[node name="CustomInput" type="Node"]
+script = ExtResource("1_ljjxr")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true

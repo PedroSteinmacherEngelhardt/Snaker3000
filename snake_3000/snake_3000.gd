@@ -9,62 +9,25 @@ func _set_initial_size(value: int):
 	initial_size = max(value, 1)
 	_setup_segments()
 
-func _get_direction():
-	if not _input_buffer.is_empty():
-		return _input_buffer.pop_front()
-	
-	var keys = _pressed_actions.keys()
-	if not keys.is_empty():
-		return _actions_map[keys.front()]
-	
-	return null
-
-
-var _input_buffer = []
-var _pressed_actions = {}
-
-const _actions_map: Dictionary[String, Vector3] = {
-	"move_north": Vector3.FORWARD,
-	"move_south": Vector3.BACK,
-	"move_west": Vector3.LEFT,
-	"move_east": Vector3.RIGHT,
-	"move_up": Vector3.UP,
-	"move_down": Vector3.DOWN,
-}
-
-
 var _segments: Array[Node3D] = []
 
-
-func _input(event):
-	for action in _actions_map.keys():
-		if event.is_action_pressed(action):
-			_pressed_actions[action] = null
-			_input_buffer.append(_actions_map[action])
-			_movement_loop(_move)
-		if event.is_action_released(action):
-			_pressed_actions.erase(action)
-
-
-func _movement_loop(handle_movement: Callable):
-	if not $Timer.is_stopped():
-		return
+func _validate_movement(direction) -> bool:
+	if $Head.global_transform.basis.z.is_equal_approx(direction):
+		return false
+	if direction == Vector3.UP and not is_on_floor():
+		return false
 		
-	var direction = _get_direction()
-	
-	if not direction:
-		return
-		
-	handle_movement.call(direction)
-	$Timer.start()
-	await $Timer.timeout
-	_movement_loop(handle_movement)
-
+	return true
 
 func _move(direction: Vector3):
 	direction =  direction.rotated(Vector3.UP, get_viewport().get_camera_3d().rotation.y)
 	
+	if not _validate_movement(direction):
+		return 
+	
 	position += direction
+	
+	$Head.look_at(direction + position, Vector3.UP if abs(direction) != Vector3.UP else Vector3.LEFT)
 	
 	direction = direction.rotated(Vector3.UP, rotation.y)
 	
@@ -79,6 +42,7 @@ func _move(direction: Vector3):
 
 func _ready():
 	_disable_process(Engine.is_editor_hint())
+	$CustomInput.on_movement.connect(_move)
 	_setup_segments()
 
 
