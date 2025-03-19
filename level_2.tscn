@@ -64,7 +64,8 @@ shadow_enabled = true
 
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.629687, 0.776849, 0, -0.776849, 0.629687, 0, 16.5758, 7.4933)
+transform = Transform3D(-0.947675, -0.0481766, 0.315579, 0.0757339, 0.926398, 0.368852, -0.310122, 0.373452, -0.874276, 1.80754, 5.17886, -16.3912)
+fov = 54.4395
 script = ExtResource("3_ehv2h")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
