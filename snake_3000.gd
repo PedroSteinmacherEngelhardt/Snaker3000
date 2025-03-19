@@ -3,19 +3,25 @@ extends CharacterBody3D
 class_name Snake3000
 
 @export var initial_size: int = 3: set = _set_initial_size
-
 func _set_initial_size(value: int):
 	if value == initial_size:
 		return
 	initial_size = max(value, 1)
 	_setup_segments()
 
-var direction: get = _get_direction
-
 func _get_direction():
-	return null if _pressed_actions.keys().is_empty() else _pressed_actions.keys().front()
+	if not _input_buffer.is_empty():
+		return _input_buffer.pop_front()
+	
+	var keys = _pressed_actions.keys()
+	if not keys.is_empty():
+		return _actions_map[keys.front()]
+	
+	return null
 
-var _pressed_actions: = {}
+
+var _input_buffer = []
+var _pressed_actions = {}
 
 const _actions_map: Dictionary[String, Vector3] = {
 	"move_north": Vector3.FORWARD,
@@ -26,45 +32,49 @@ const _actions_map: Dictionary[String, Vector3] = {
 	"move_down": Vector3.DOWN,
 }
 
-var is_moving: bool = false
 
 var _segments: Array[Node3D] = []
+
 
 func _input(event):
 	for action in _actions_map.keys():
 		if event.is_action_pressed(action):
 			_pressed_actions[action] = null
-			_start_movement(print)
+			_input_buffer.append(_actions_map[action])
+			_movement_loop(_move)
 		if event.is_action_released(action):
 			_pressed_actions.erase(action)
 
 
-func _start_movement(handle_movement: Callable):
-	if is_moving:
+func _movement_loop(handle_movement: Callable):
+	if not $Timer.is_stopped():
 		return
+		
+	var direction = _get_direction()
 	
-	is_moving = true
+	if not direction:
+		return
+		
+	handle_movement.call(direction)
+	$Timer.start()
+	await $Timer.timeout
+	_movement_loop(handle_movement)
+
+
+func _move(direction: Vector3):
+	direction =  direction.rotated(Vector3.UP, get_viewport().get_camera_3d().rotation.y)
 	
-	if $Timer.is_stopped():
-		if not direction:
-			is_moving = false
-			return
+	position += direction
+	
+	direction = direction.rotated(Vector3.UP, rotation.y)
+	
+	var back = _segments.pop_back()
+	back.position = -direction
+	
+	for segment in _segments:
+		segment.position -= direction
 		
-		handle_movement.call(direction)
-		
-		$Timer.start()
-		
-	while not _pressed_actions.is_empty():
-		await $Timer.timeout
-		
-		if not direction:
-			break
-		
-		handle_movement.call(direction)
-		
-		$Timer.start()
-		
-	is_moving = false
+	_segments.push_front(back)
 
 
 func _ready():
@@ -99,14 +109,14 @@ func _create_segment():
 	model.mesh = box_mesh
 	
 	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(0.0, 0.5, 0.0)
+	material.albedo_color = Color(randf(), randf(), randf())
 	
 	box_mesh.material = material
 	
 	segment.add_child(model)
 	add_child(segment)
 	
-	segment.position = Vector3(1, 0, 0) * (_segments.size())
+	segment.position = Vector3(0, 0, 1) * (_segments.size())
 
 
 func grow():

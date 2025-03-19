@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Snaker3000"
-run/main_scene="uid://0pxfaj8xa0c0"
+run/main_scene="uid://dpkrwswhb7gdf"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 

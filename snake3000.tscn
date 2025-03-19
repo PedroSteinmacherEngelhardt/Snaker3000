@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bv00i24cufov4"]
+[gd_scene load_steps=5 format=3 uid="uid://4sqw2jsystx2"]
 
 [ext_resource type="Script" uid="uid://t2iwikjt2p1l" path="res://snake_3000.gd" id="1_62rt0"]
 
@@ -21,7 +21,6 @@ shape = SubResource("BoxShape3D_62rt0")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
 mesh = SubResource("BoxMesh_5eypk")
 
-[node name="Body" type="Node3D" parent="."]
-
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
