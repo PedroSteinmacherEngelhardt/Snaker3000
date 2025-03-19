@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dwdcnue4jppgx"]
 
-[ext_resource type="Script" uid="uid://ci0stj0wgtxlv" path="res://Level.gd" id="1_j7kpp"]
+[ext_resource type="Script" uid="uid://bc0kxkkj5l5rm" path="res://snakegame/level_1.gd" id="1_iey7c"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://snakegame/test_word.gdshader" id="2_5b03i"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_e6u7d"]
 [ext_resource type="PackedScene" uid="uid://dnqa4m78arnjq" path="res://SuneikoTreisMill.tscn" id="4_mxc8w"]
@@ -49,7 +49,7 @@ sky = SubResource("Sky_lp74u")
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5b03i"]
 
 [node name="Level1" type="Node3D"]
-script = ExtResource("1_j7kpp")
+script = ExtResource("1_iey7c")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_oi51e")
@@ -68,7 +68,6 @@ script = ExtResource("3_e6u7d")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [node name="SuneikoTreisMill" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_mxc8w")]
-process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 camera = NodePath("../Camera")
 

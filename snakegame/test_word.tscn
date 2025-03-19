@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://snakegame/test_word.gdshader" id="1_agsgp"]
 [ext_resource type="Script" uid="uid://dwucj5xnwpwi2" path="res://snakegame/test_word.gd" id="1_q8pox"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="2_lxjyj"]
-[ext_resource type="Texture2D" uid="uid://bq1el0otttq7g" path="res://stars.png" id="3_7rnna"]
+[ext_resource type="Texture2D" uid="uid://c85lqlo3nxxfo" path="res://stars.png" id="3_7rnna"]
 [ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snakegame/snake.gd" id="4_ij4n8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q8pox"]
@@ -100,5 +100,6 @@ shadow_enabled = true
 sky_mode = 2
 
 [node name="Snake" type="CharacterBody3D" parent="."]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52076, -0.144039, 0.132833)
 script = ExtResource("4_ij4n8")
