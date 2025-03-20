@@ -2,104 +2,62 @@
 extends CharacterBody3D
 class_name Snaker3000
 
-var points = []
-@export var initial_size = 3: set = _set_initial_size
 
-var should_grow = false
+var val_list = []
+var _segments: Array[Node3D] = []
+@export var initial_size: int = 3: 
+	set(value):
+		if initial_size == value: return
+		initial_size = max(1, value)
+		_setup_segments()
+
+var _should_grow: bool = false
 
 @onready var spawnpoint := global_position
-@onready var camera: Camera = %Camera
+@onready var camera: Camera = get_viewport().get_camera_3d()
 
 var material = preload("res://snakegame/new_standard_material_3d.tres")
 
 
 func _ready():
 	_disable_process(Engine.is_editor_hint())
-	_set_initial_size(initial_size)
-	
-
-func _set_initial_size(size):
-	initial_size = max(1, size)
-	for p in points:
-		p.queue_free()
-	points.clear()
-	for p in initial_size:
-		add_box()
-	
-
-var _pressed_actions: = {}
-
-const _actions_map: Dictionary[String, Vector3] = {
-	"move_north": Vector3.FORWARD,
-	"move_south": Vector3.BACK,
-	"move_west": Vector3.LEFT,
-	"move_east": Vector3.RIGHT,
-	"move_up": Vector3.UP,
-	"move_down": Vector3.DOWN,
-}
+	if not Engine.is_editor_hint():
+		%TimedMovement.on_timed_input.connect(_on_movement_input)
+	_setup_segments()
 
 
-var _is_moving: bool = false
 
 
-func _input(event):
-	for action in _actions_map.keys():
-		if event.is_action_pressed(action):
-			_pressed_actions[_actions_map[action]] = null
-			_input_buffer.append(_actions_map[action])
-			_movement_loop()
-		if event.is_action_released(action):
-			_pressed_actions.erase(_actions_map[action])
 
-
-var _input_buffer = []
-
-
-func _movement_loop() -> void:
-	if not $Timer.is_stopped():
-		return
-
-	var direction: Vector3
-
-	var actions = _pressed_actions.keys()
-	if not _input_buffer.is_empty():
-		direction = _input_buffer.pop_back()
-	elif not actions.is_empty():
-		direction = actions.front()
-	else:
-		return
+func _on_movement_input(direction: Vector3):
+	if _should_grow == true:
+		_add_segment()
+		_should_grow = false
 	_move(direction)
-	$Timer.start()
-	await $Timer.timeout
-	if should_grow:
-		add_box()
-	_movement_loop()
 
-var val_list = []
 
 func _move(direction: Vector3):
-	if will_collide_if_moved(points[0].global_position + direction):
+	if will_collide_if_moved(_segments[0].global_position + direction):
 		camera.add_trauma(.5)
 	else:
 		val_list.clear()
-		val_list.resize(points.size())
+		val_list.resize(_segments.size())
 		val_list.fill(Vector3.ZERO)
-		for i in range(points.size()-1, 0, -1):
+		for i in range(_segments.size()-1, 0, -1):
 			var tween := create_tween()
-			tween.tween_method(move_head.bind(i), Vector3.ZERO, points[i-1].global_position - points[i].global_position, $Timer.wait_time)
+			tween.tween_method(move_head.bind(i), Vector3.ZERO, _segments[i-1].global_position - _segments[i].global_position, %TimedMovement.wait_time)
 		var tween := create_tween()
-		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, $Timer.wait_time)
-
+		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, %TimedMovement.wait_time)
 
 
 func move_head(val, index):
-	points[index].global_position += val - val_list[index]
+	_segments[index].global_position += val - val_list[index]
 	val_list[index] = val
 
 
 func move_body():
-	for i in range(points.size()-1, 0, -1):
-			points[i].global_position = points[i-1].global_position
+	for i in range(_segments.size()-1, 0, -1):
+			_segments[i].global_position = _segments[i-1].global_position
 
 
 func _physics_process(delta):
@@ -127,11 +85,18 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 
 
 func grow():
-	should_grow = true
+	_should_grow = true
 
 
-func add_box():
-	should_grow = false
+func _setup_segments():
+	for segment in _segments:
+		segment.queue_free()
+	_segments.clear()
+	for i in range(initial_size):
+		_add_segment()
+
+
+func _add_segment():
 	var box : BoxMesh = BoxMesh.new()
 	box.size = Vector3.ONE
 	
@@ -144,15 +109,15 @@ func add_box():
 	body.material_override = material
 	
 	var direction = Vector3(1,0,0)
-	if points.size() > 2:
-		direction = points[points.size() - 1].global_position.direction_to(points[points.size() - 2].global_position)
+	if _segments.size() > 2:
+		direction = _segments[_segments.size() - 1].global_position.direction_to(_segments[_segments.size() - 2].global_position)
 	
 	var init_pos = global_position
-	if points.size() > 0:
-		init_pos = points[points.size() - 1].global_position
+	if _segments.size() > 0:
+		init_pos = _segments[_segments.size() - 1].global_position
 	var pos = init_pos - direction
 	
-	points.append(collision)
+	_segments.append(collision)
 	add_child(collision)
 	collision.add_child(body)
 	collision.global_position = pos
