@@ -1,15 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://n4k8y5mn6dde"]
 
 [ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snaker_3000/snaker_3000.gd" id="1_vnqyo"]
-[ext_resource type="Script" uid="uid://c01thovqkxv40" path="res://snaker_3000/timed_movement.gd" id="2_cjvaw"]
+[ext_resource type="PackedScene" uid="uid://x838pafmnpw1" path="res://snaker_3000/timed_movement.tscn" id="2_cjvaw"]
 
 [node name="Snaker3000" type="CharacterBody3D"]
 process_mode = 4
 script = ExtResource("1_vnqyo")
 
-[node name="TimedMovement" type="Node" parent="."]
+[node name="TimedMovement" parent="." instance=ExtResource("2_cjvaw")]
 unique_name_in_owner = true
-script = ExtResource("2_cjvaw")
-
-[node name="Timer" type="Timer" parent="TimedMovement"]
-one_shot = true

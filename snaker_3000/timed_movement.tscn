@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://x838pafmnpw1"]
+
+[ext_resource type="Script" uid="uid://c01thovqkxv40" path="res://snaker_3000/timed_movement.gd" id="1_suhki"]
+
+[node name="TimedMovement" type="Node"]
+script = ExtResource("1_suhki")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
