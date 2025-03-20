@@ -3,7 +3,7 @@
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="1_oi51e"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k7ipi"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_cbhfs"]
-[ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://grow!.tscn" id="4_lp74u"]
+[ext_resource type="PackedScene" path="res://grow!.tscn" id="4_lp74u"]
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="5_oi51e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
@@ -86,4 +86,3 @@ script = ExtResource("3_cbhfs")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [node name="Snaker3000" parent="." instance=ExtResource("5_oi51e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

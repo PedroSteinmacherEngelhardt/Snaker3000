@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dekt7nepc6nba"
+path="res://.godot/imported/rocks.obj-fb742b979b325e493b403a4c10e205aa.mesh"
+
+[deps]
+
+files=["res://.godot/imported/rocks.obj-fb742b979b325e493b403a4c10e205aa.mesh"]
+
+source_file="res://assets/kenney_dungeon/models/rocks.obj"
+dest_files=["res://.godot/imported/rocks.obj-fb742b979b325e493b403a4c10e205aa.mesh", "res://.godot/imported/rocks.obj-fb742b979b325e493b403a4c10e205aa.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
