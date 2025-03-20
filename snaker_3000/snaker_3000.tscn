@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://n4k8y5mn6dde"]
+
+[ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snaker_3000/snaker_3000.gd" id="1_vnqyo"]
+
+[node name="Snaker3000" type="CharacterBody3D"]
+script = ExtResource("1_vnqyo")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true

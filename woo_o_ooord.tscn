@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k7ipi"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_cbhfs"]
 [ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://grow!.tscn" id="4_lp74u"]
-[ext_resource type="Script" uid="uid://bq060p1gtik3b" path="res://snakegame/snake.gd" id="5_oi51e"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="5_oi51e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
 shader = ExtResource("2_k7ipi")
@@ -49,7 +49,7 @@ sky = SubResource("Sky_lp74u")
 [node name="terrain" type="Node3D" parent="."]
 
 [node name="GridMap" type="GridMap" parent="terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1.5, 0.5)
 mesh_library = ExtResource("1_oi51e")
 cell_size = Vector3(1, 1, 1)
 data = {
@@ -58,6 +58,7 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 3, 0)
 
 [node name="GROWS!" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="GROW!3" parent="GROWS!" instance=ExtResource("4_lp74u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.97021, 1.58708, -2.95833)
@@ -84,12 +85,5 @@ transform = Transform3D(1, 0, 0, 0, 0.928356, 0.371692, 0, -0.371692, 0.928356, 
 script = ExtResource("3_cbhfs")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
-[node name="Snake" type="CharacterBody3D" parent="."]
+[node name="Snaker3000" parent="." instance=ExtResource("5_oi51e")]
 process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.553441, 0)
-script = ExtResource("5_oi51e")
-initial_size = 4
-
-[node name="Timer" type="Timer" parent="Snake"]
-wait_time = 0.1
-one_shot = true

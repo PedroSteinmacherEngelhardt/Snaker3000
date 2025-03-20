@@ -1,5 +1,6 @@
 @tool
 extends CharacterBody3D
+class_name Snaker3000
 
 var points = []
 @export var initial_size = 3: set = _set_initial_size
