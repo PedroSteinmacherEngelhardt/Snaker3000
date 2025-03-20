@@ -106,4 +106,3 @@ metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]
 [connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]
-[connection signal="died" from="Spawn/Snaker3000" to="." method="_on_snaker_3000_died"]

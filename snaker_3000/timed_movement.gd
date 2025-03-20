@@ -1,15 +1,6 @@
 @tool
 extends Node
 
-@export var wait_time: float = 0.1: 
-	set(value):
-		wait_time = value
-		$Timer.wait_time = wait_time
-
-
-func _ready():
-	$Timer.wait_time = wait_time
-
 
 var _pressed_actions: Set = Set.new()
 var _input_buffer: Vector3 = Vector3.ZERO
@@ -54,6 +45,6 @@ func _movement_loop() -> void:
 		return
 
 	on_timed_input.emit(direction)
-	$Timer.start(wait_time)
+	$Timer.start(get_parent().wait_time)
 	await $Timer.timeout
 	_movement_loop()

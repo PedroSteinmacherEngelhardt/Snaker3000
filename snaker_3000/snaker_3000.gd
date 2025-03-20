@@ -2,6 +2,7 @@
 extends CharacterBody3D
 class_name Snaker3000
 
+@export var wait_time: float = 0.2
 
 var val_list = []
 var _segments: Array[Node3D] = []
@@ -24,6 +25,8 @@ func _ready():
 	if not Engine.is_editor_hint():
 		%TimedMovement.on_timed_input.connect(_on_movement_input)
 	_setup_segments()
+	$TimedMovement/Timer.wait_time = wait_time
+	print($TimedMovement/Timer.wait_time)
 	
 
 
@@ -45,9 +48,9 @@ func _move(direction: Vector3):
 		val_list.fill(Vector3.ZERO)
 		for i in range(_segments.size()-1, 0, -1):
 			var tween := create_tween()
-			tween.tween_method(move_head.bind(i), Vector3.ZERO, _segments[i-1].global_position - _segments[i].global_position, %TimedMovement.wait_time)
+			tween.tween_method(move_head.bind(i), Vector3.ZERO, _segments[i-1].global_position - _segments[i].global_position, wait_time)
 		var tween := create_tween()
-		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, %TimedMovement.wait_time)
+		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, wait_time)
 
 
 func move_head(val, index):

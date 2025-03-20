@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" load_steps=28 format=4 uid="uid://m7twjsuhucgs"]
 
-[ext_resource type="Texture2D" uid="uid://dnjmu67cucxhn" path="res://assets/kenney_dungeon/models/colormap.png" id="1_g082w"]
+[ext_resource type="Texture2D" uid="uid://btlsn2biu0h4a" path="res://assets/kenney_dungeon/models/colormap.png" id="1_g082w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24ad8"]
 albedo_texture = ExtResource("1_g082w")

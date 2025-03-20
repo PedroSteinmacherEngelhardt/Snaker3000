@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btlsn2biu0h4a"
-path.s3tc="res://.godot/imported/colormap.png-ac8ac35b9e7b9c3cab4e8396852aac73.s3tc.ctex"
+uid="uid://c85lqlo3nxxfo"
+path.s3tc="res://.godot/imported/stars.png-256a232ab4d0d756c204342db2d8c8ef.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/kenney_dungeon/models/colormap.png"
-dest_files=["res://.godot/imported/colormap.png-ac8ac35b9e7b9c3cab4e8396852aac73.s3tc.ctex"]
+source_file="res://stars.png"
+dest_files=["res://.godot/imported/stars.png-256a232ab4d0d756c204342db2d8c8ef.s3tc.ctex"]
 
 [params]
 
