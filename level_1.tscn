@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://dwdcnue4jppgx"]
 
 [ext_resource type="Script" uid="uid://ci0stj0wgtxlv" path="res://Level.gd" id="1_j7kpp"]
-[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://snakegame/test_word.gdshader" id="2_5b03i"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_5b03i"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_e6u7d"]
-[ext_resource type="PackedScene" uid="uid://dnqa4m78arnjq" path="res://SuneikoTreisMill.tscn" id="4_mxc8w"]
+[ext_resource type="PackedScene" path="res://SuneikoTreisMill.tscn" id="4_mxc8w"]
 [ext_resource type="MeshLibrary" uid="uid://m7twjsuhucgs" path="res://assets/kenney_dungeon/kenney_dungeon_blocks_mesh.tres" id="5_e6u7d"]
-[ext_resource type="Script" uid="uid://dh3oul7yq0d08" path="res://grid_map.gd" id="6_e6u7d"]
+[ext_resource type="Script" uid="uid://c34vo81sdqk72" path="res://grid_map.gd" id="6_e6u7d"]
 [ext_resource type="PackedScene" uid="uid://egepk2y3m77f" path="res://deathzone.tscn" id="7_mxc8w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]

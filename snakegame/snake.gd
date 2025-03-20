@@ -2,25 +2,29 @@
 extends CharacterBody3D
 
 var points = []
-var size = 1
+@export var initial_size = 3: set = _set_initial_size
 
-@export var spawnpoint : Node3D
-@export var camera: Camera
+var should_grow = false
+
+@onready var spawnpoint := global_position
+@onready var camera: Camera = %Camera
 
 var material = preload("res://snakegame/new_standard_material_3d.tres")
 
 
-func _get_direction():
-	var pressed_actions = _pressed_actions.keys()
-	return null if pressed_actions.is_empty() else _actions_map[pressed_actions.front()]
-
-
 func _ready():
 	_disable_process(Engine.is_editor_hint())
-	add_box()
-	add_box()
-	add_box()
+	_set_initial_size(initial_size)
+	
 
+func _set_initial_size(size):
+	initial_size = max(1, size)
+	for p in points:
+		p.queue_free()
+	points.clear()
+	for p in initial_size:
+		add_box()
+	
 
 var _pressed_actions: = {}
 
@@ -40,66 +44,68 @@ var _is_moving: bool = false
 func _input(event):
 	for action in _actions_map.keys():
 		if event.is_action_pressed(action):
-			_pressed_actions[action] = null
+			_pressed_actions[_actions_map[action]] = null
 			_input_buffer.append(_actions_map[action])
-			_start_movement(_move)
+			_movement_loop()
 		if event.is_action_released(action):
-			_pressed_actions.erase(action)
+			_pressed_actions.erase(_actions_map[action])
 
 
 var _input_buffer = []
 
 
-func _start_movement(handle_movement: Callable):
-	if _is_moving:
+func _movement_loop() -> void:
+	if not $Timer.is_stopped():
 		return
-	
-	_is_moving = true
-	
-	if $Timer.is_stopped():
-		var direction = _get_direction()
-		if not direction:
-			_is_moving = false
-			return
-		
-		handle_movement.call(direction)
-		
-		$Timer.start()
-		
-	while not _input_buffer.is_empty() or not _pressed_actions.is_empty():
-		await $Timer.timeout
-		if not _input_buffer.is_empty():
-			handle_movement.call(_input_buffer.pop_back())
-		else:
-			var direction = _get_direction()
-			if not direction:
-				break
-				
-			handle_movement.call(direction)
-		
-		$Timer.start()
-		
-	_is_moving = false
 
+	var direction: Vector3
+
+	var actions = _pressed_actions.keys()
+	if not _input_buffer.is_empty():
+		direction = _input_buffer.pop_back()
+	elif not actions.is_empty():
+		direction = actions.front()
+	else:
+		return
+	_move(direction)
+	$Timer.start()
+	await $Timer.timeout
+	if should_grow:
+		add_box()
+	_movement_loop()
+
+var val_list = []
 
 func _move(direction: Vector3):
 	if will_collide_if_moved(points[0].global_position + direction):
 		camera.add_trauma(.5)
 	else:
-		move_body()
-		points[0].global_position += direction
+		val_list.clear()
+		val_list.resize(points.size())
+		val_list.fill(Vector3.ZERO)
+		for i in range(points.size()-1, 0, -1):
+			var tween := create_tween()
+			tween.tween_method(move_head.bind(i), Vector3.ZERO, points[i-1].global_position - points[i].global_position, $Timer.wait_time)
+		var tween := create_tween()
+		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, $Timer.wait_time)
 
 
-func _physics_process(delta):
-	if not is_on_floor():
-		velocity = velocity + get_gravity() * delta
-		
-	move_and_slide()
+
+func move_head(val, index):
+	points[index].global_position += val - val_list[index]
+	val_list[index] = val
 
 
 func move_body():
 	for i in range(points.size()-1, 0, -1):
 			points[i].global_position = points[i-1].global_position
+
+
+func _physics_process(delta):
+	if not is_on_floor():
+		velocity = velocity + get_gravity() * delta * 2
+		
+	move_and_slide()
 
 
 func will_collide_if_moved(new_position: Vector3) -> bool:
@@ -108,7 +114,7 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	var query = PhysicsShapeQueryParameters3D.new()
 	
 	var box = BoxShape3D.new()
-	box.size *= Vector3.ONE * .99
+	box.size *= Vector3.ONE * .40
 	query.shape = box
 	
 	var rotation = Basis().rotated(Vector3.UP, camera.rotation.y)
@@ -119,9 +125,14 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	return results.size() > 0
 
 
+func grow():
+	should_grow = true
+
+
 func add_box():
+	should_grow = false
 	var box : BoxMesh = BoxMesh.new()
-	box.size = Vector3.ONE * size
+	box.size = Vector3.ONE
 	
 	var collision := CollisionShape3D.new()
 	collision.shape = BoxShape3D.new()
@@ -131,23 +142,19 @@ func add_box():
 	body.mesh = box
 	body.material_override = material
 	
-	var direction = Vector3(1,0,0).rotated(Vector3.UP, camera.rotation.y).normalized()
+	var direction = Vector3(1,0,0)
 	if points.size() > 2:
 		direction = points[points.size() - 1].global_position.direction_to(points[points.size() - 2].global_position)
 	
 	var init_pos = global_position
 	if points.size() > 0:
 		init_pos = points[points.size() - 1].global_position
-	var pos = init_pos - (size * direction)
-	
-	#print(init_pos, " | ", direction, " | ", pos)
-	#body.global_position = pos
+	var pos = init_pos - direction
 	
 	points.append(collision)
 	add_child(collision)
 	collision.add_child(body)
 	collision.global_position = pos
-	collision.rotation.y = camera.rotation.y
 
 
 func _disable_process(value: bool):
