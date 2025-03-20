@@ -3,9 +3,6 @@ extends CharacterBody3D
 class_name Snaker3000
 
 
-signal died()
-
-
 var val_list = []
 var _segments: Array[Node3D] = []
 @export var initial_size: int = 3: 
@@ -16,19 +13,10 @@ var _segments: Array[Node3D] = []
 
 var _should_grow: bool = false
 
+@onready var spawnpoint := global_position
 @onready var camera: Camera = get_viewport().get_camera_3d()
 
-
 var material = preload("res://snakegame/new_standard_material_3d.tres")
-
-
-func grow():
-	_should_grow = true
-
-
-func kill():
-	_setup_segments()
-	died.emit()
 
 
 func _ready():
@@ -36,9 +24,12 @@ func _ready():
 	if not Engine.is_editor_hint():
 		%TimedMovement.on_timed_input.connect(_on_movement_input)
 	_setup_segments()
+	
 
 
 func _on_movement_input(direction: Vector3):
+	for s in _segments:
+		s.global_position = (s.global_position.snapped(Vector3.ONE) * Vector3(1,0,1)) + (s.global_position * Vector3(0,1,0))
 	if _should_grow == true:
 		_add_segment()
 		_should_grow = false
@@ -70,6 +61,10 @@ func move_body():
 
 
 func _physics_process(delta):
+	#move da grass
+	#var pos_list = _segments.map(func(element): return element.global_position)
+	#$"../StaticBody3D/MultiMeshInstance3D".material_override.set_shader_parameter("player_pos", pos_list)
+	
 	if not is_on_floor():
 		velocity = velocity + get_gravity() * delta * 2
 		
@@ -91,6 +86,10 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	var results = space_state.intersect_shape(query)
 	
 	return results.size() > 0
+
+
+func grow():
+	_should_grow = true
 
 
 func _setup_segments():
