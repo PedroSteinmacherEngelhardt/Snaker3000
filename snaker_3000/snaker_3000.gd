@@ -3,6 +3,9 @@ extends CharacterBody3D
 class_name Snaker3000
 
 
+signal died()
+
+
 var val_list = []
 var _segments: Array[Node3D] = []
 @export var initial_size: int = 3: 
@@ -13,10 +16,19 @@ var _segments: Array[Node3D] = []
 
 var _should_grow: bool = false
 
-@onready var spawnpoint := global_position
 @onready var camera: Camera = get_viewport().get_camera_3d()
 
+
 var material = preload("res://snakegame/new_standard_material_3d.tres")
+
+
+func grow():
+	_should_grow = true
+
+
+func kill():
+	_setup_segments()
+	died.emit()
 
 
 func _ready():
@@ -24,9 +36,6 @@ func _ready():
 	if not Engine.is_editor_hint():
 		%TimedMovement.on_timed_input.connect(_on_movement_input)
 	_setup_segments()
-
-
-
 
 
 func _on_movement_input(direction: Vector3):
@@ -82,10 +91,6 @@ func will_collide_if_moved(new_position: Vector3) -> bool:
 	var results = space_state.intersect_shape(query)
 	
 	return results.size() > 0
-
-
-func grow():
-	_should_grow = true
 
 
 func _setup_segments():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbomkv821oea4"]
+[gd_scene load_steps=9 format=3 uid="uid://dq8uwpndnovv2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_28pbb"]
 albedo_color = Color(0.32549, 0.223529, 0, 1)
@@ -15,6 +15,14 @@ albedo_color = Color(0.164706, 0.45098, 0.117647, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gl4yn"]
 material = SubResource("StandardMaterial3D_yni62")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gl4yn"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_imju3"]
+material = SubResource("StandardMaterial3D_gl4yn")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bagcy"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -35,3 +43,11 @@ skeleton = NodePath("StaticBody3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
 shape = SubResource("BoxShape3D_yni62")
+
+[node name="Food" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_imju3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Food"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Food/StaticBody3D"]
+shape = SubResource("SphereShape3D_bagcy")

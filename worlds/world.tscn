@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://c4n3rq4m2f585"]
+
+[ext_resource type="Script" uid="uid://yxq2e8yaasay" path="res://worlds/world.gd" id="1_12do3"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="1_m138w"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_wp1yw"]
+[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_c7htk"]
+[ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_c7htk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12do3"]
+shader = ExtResource("1_wp1yw")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_lp74u"]
+sky_material = SubResource("ShaderMaterial_12do3")
+
+[sub_resource type="Environment" id="Environment_3euow"]
+background_mode = 2
+sky = SubResource("Sky_lp74u")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fa4vq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_12do3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3euow"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_aprxe"]
+material = SubResource("StandardMaterial3D_3euow")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_12do3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3euow")
+
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.308486, -0.78623, -0.535425, 0, -0.562877, 0.826541, -0.951229, -0.254976, -0.17364, 0, 3.33928, 0)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="Moon" type="DirectionalLight3D" parent="WorldEnvironment"]
+
+[node name="Death" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Death"]
+shape = SubResource("WorldBoundaryShape3D_fa4vq")
+
+[node name="Exit" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit"]
+shape = SubResource("SphereShape3D_12do3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Exit/CollisionShape3D"]
+mesh = SubResource("SphereMesh_aprxe")
+
+[node name="Spawn" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Snaker3000" parent="Spawn" instance=ExtResource("1_m138w")]
+unique_name_in_owner = true
+
+[node name="GridMap" type="GridMap" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1.5, -0.5)
+mesh_library = ExtResource("2_c7htk")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65534, 65534, 1, 65534, 65535, 1, 65534, 0, 1, 65534, 1, 1, 65534, 2, 1, 65535, 2, 1, 0, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 1, 2, 0, 1, 2, 65535, 1, 2, 65534, 1, 1, 65534, 1, 0, 65534, 1, 65535, 65534, 1, 65535, 65535, 1, 0, 65535, 1, 1, 65535, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 65535, 0, 1, 65535, 1, 1, 65533, 65533, 1, 65534, 65533, 1, 65535, 65533, 1, 0, 65533, 1, 1, 65533, 1, 2, 65533, 1, 3, 65533, 1, 3, 65534, 1, 3, 65535, 1, 3, 0, 1, 3, 1, 1, 3, 2, 1, 3, 3, 1, 2, 3, 1, 1, 3, 1, 0, 3, 1, 65535, 3, 1, 65534, 3, 1, 65533, 3, 1, 65533, 2, 1, 65533, 1, 1, 65533, 0, 1, 65533, 65535, 1, 65533, 65534, 1, 65539, 65533, 2, 65538, 3, 2)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(0.549781, -0.254023, 0.795748, 0, 0.952638, 0.304106, -0.83531, -0.167192, 0.523742, 8.00991, 3.0611, 5.27193)
+script = ExtResource("3_c7htk")
+metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
+
+[connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]
+[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]
+[connection signal="died" from="Spawn/Snaker3000" to="." method="_on_snaker_3000_died"]

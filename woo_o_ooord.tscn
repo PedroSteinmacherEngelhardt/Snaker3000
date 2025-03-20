@@ -3,7 +3,7 @@
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="1_oi51e"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k7ipi"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_cbhfs"]
-[ext_resource type="PackedScene" path="res://grow!.tscn" id="4_lp74u"]
+[ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://scenes/grow!.tscn" id="4_lp74u"]
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="5_oi51e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
@@ -37,12 +37,12 @@ shader_parameter/clouds_blur = 0.25
 shader_parameter/stars_speed = 1.0
 shader_parameter/overwritten_time = 0.0
 
-[sub_resource type="Sky" id="Sky_lp74u"]
+[sub_resource type="Sky" id="Sky_oi51e"]
 sky_material = SubResource("ShaderMaterial_cbhfs")
 
 [sub_resource type="Environment" id="Environment_oi51e"]
 background_mode = 2
-sky = SubResource("Sky_lp74u")
+sky = SubResource("Sky_oi51e")
 
 [node name="WooOOoord" type="Node3D"]
 
