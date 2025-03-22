@@ -11,6 +11,7 @@ var _replaceble_cells = {
 
 func _ready():
 	_replace_gridmap()
+	%Snaker3000.connect("died",_on_snaker_3000_died)
 
 
 func _replace_gridmap():
@@ -21,6 +22,7 @@ func _replace_gridmap():
 			add_child(scene)
 			scene.position = %GridMap.to_global(cell) + Vector3(0.5, 0.5, 0.5)
 			%GridMap.set_cell_item(cell, -1)
+
 
 func _on_death_body_entered(maybeASnaker3000):
 	if maybeASnaker3000 is Snaker3000:

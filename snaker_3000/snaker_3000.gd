@@ -2,9 +2,7 @@
 extends CharacterBody3D
 class_name Snaker3000
 
-
 signal died()
-
 
 var val_list = []
 var _segments: Array[Node3D] = []
@@ -17,8 +15,6 @@ var _segments: Array[Node3D] = []
 var _should_grow: bool = false
 
 @onready var camera: Camera = get_viewport().get_camera_3d()
-
-
 var material = preload("res://snakegame/new_standard_material_3d.tres")
 
 
@@ -34,11 +30,13 @@ func kill():
 func _ready():
 	_disable_process(Engine.is_editor_hint())
 	if not Engine.is_editor_hint():
-		%TimedMovement.on_timed_input.connect(_on_movement_input)
+		%Timer.on_timed_input.connect(_on_movement_input)
 	_setup_segments()
 
 
 func _on_movement_input(direction: Vector3):
+	for s in _segments:
+		s.global_position = (s.global_position.snapped(Vector3.ONE) * Vector3(1,0,1)) + (s.global_position * Vector3(0,1,0))
 	if _should_grow == true:
 		_add_segment()
 		_should_grow = false
@@ -54,9 +52,9 @@ func _move(direction: Vector3):
 		val_list.fill(Vector3.ZERO)
 		for i in range(_segments.size() - 1, 0, -1):
 			var tween := create_tween()
-			tween.tween_method(move_head.bind(i), Vector3.ZERO, _segments[i - 1].global_position - _segments[i].global_position, %TimedMovement.wait_time)
+			tween.tween_method(move_head.bind(i), Vector3.ZERO, _segments[i - 1].global_position - _segments[i].global_position, %Timer.wait_time)
 		var tween := create_tween()
-		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, %TimedMovement.wait_time)
+		tween.tween_method(move_head.bind(0), Vector3.ZERO, direction, %Timer.wait_time)
 
 
 func move_head(val, index):
@@ -112,6 +110,8 @@ func _add_segment():
 	var body := MeshInstance3D.new()
 	body.mesh = box
 	body.material_override = material
+	body.set_layer_mask_value(1,false)
+	body.set_layer_mask_value(20,true)
 	
 	var direction = Vector3(1, 0, 0)
 	if _segments.size() > 2:
