@@ -1,16 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://bv4ruujdu1ku0"]
+[gd_scene load_steps=14 format=3 uid="uid://c1xbmiu567q2v"]
 
-[ext_resource type="Script" uid="uid://jlap4w0pms72" path="res://_menu.gd" id="1_aik4y"]
-[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_uka6n"]
-[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_aik4y"]
-[ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_bvd5s"]
-[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="4_a3klu"]
-[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_a3klu"]
-[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_2y7rr"]
-[ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_2y7rr"]
+[ext_resource type="Script" uid="uid://d3pqfo37g6uc" path="res://tankiu.gd" id="1_mgr3d"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k4xn6"]
+[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="3_8f2lc"]
+[ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="4_1g5jk"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="5_qde0v"]
+[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_8egxb"]
+[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_yfpb5"]
+[ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_u4rij"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2y7rr"]
-shader = ExtResource("1_uka6n")
+shader = ExtResource("2_k4xn6")
 shader_parameter/day_top_color = Color(0.909804, 0.580392, 0, 1)
 shader_parameter/day_bottom_color = Color(0.780481, 0.753174, 0.463973, 1)
 shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
@@ -49,7 +49,7 @@ sky = SubResource("Sky_oi51e")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dmy7c"]
 render_priority = 0
-shader = ExtResource("6_a3klu")
+shader = ExtResource("6_8egxb")
 shader_parameter/albedo1 = Color(1, 1, 1, 1)
 shader_parameter/albedo2 = Color(0, 0.380392, 0.380392, 1)
 shader_parameter/noiseScale = 20.0
@@ -59,10 +59,10 @@ shader_parameter/radius = 1.5
 
 [sub_resource type="MultiMesh" id="MultiMesh_copje"]
 transform_format = 1
-mesh = ExtResource("7_2y7rr")
+mesh = ExtResource("7_yfpb5")
 
-[node name="Menu" type="Node3D"]
-script = ExtResource("1_aik4y")
+[node name="TankiuForPlaying" type="Node3D"]
+script = ExtResource("1_mgr3d")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dmy7c")
@@ -74,7 +74,7 @@ shadow_enabled = true
 [node name="GridMap" type="GridMap" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1.5, -0.5)
-mesh_library = ExtResource("2_aik4y")
+mesh_library = ExtResource("3_8f2lc")
 cell_size = Vector3(1, 1, 1)
 collision_layer = 524289
 collision_mask = 524289
@@ -87,10 +87,10 @@ metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="Camera" type="Camera3D" parent="camera_anchor"]
 transform = Transform3D(1, 0, 0, 0, 0.690769, 0.723076, 0, -0.723076, 0.690769, 0, 10.8569, 12.5742)
-script = ExtResource("3_bvd5s")
+script = ExtResource("4_1g5jk")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
-[node name="Snaker3000" parent="." instance=ExtResource("4_a3klu")]
+[node name="Snaker3000" parent="." instance=ExtResource("5_qde0v")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
@@ -101,7 +101,7 @@ cast_shadow = 0
 ignore_occlusion_culling = true
 gi_mode = 0
 multimesh = SubResource("MultiMesh_copje")
-script = ExtResource("8_2y7rr")
+script = ExtResource("8_u4rij")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -133,33 +133,31 @@ layout_mode = 2
 [node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 100
-text = "SNAKER3000"
+text = "THX 4 PLAYING"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
+alignment = 1
 
-[node name="Play_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Creditos" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-focus_next = NodePath("../Select_button")
-focus_previous = NodePath("../Exit_button")
-text = "PLAY"
+text = "Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
+Aqui vao os creditos chagtpt
 
-[node name="Select_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-focus_next = NodePath("../Exit_button")
-focus_previous = NodePath("../Play_button")
-text = "SELECT PHASE"
-
-[node name="Exit_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-focus_next = NodePath("../Play_button")
-focus_previous = NodePath("../Select_button")
-text = "EXIT
 "
 
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Play_button" to="." method="_on_play_button_pressed"]
+[node name="BACK_TO_START" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "BACK TO START
+"
+
+[connection signal="button_up" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/BACK_TO_START" to="." method="_on_back_to_start_button_up"]
