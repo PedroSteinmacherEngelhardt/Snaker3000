@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_a3klu"]
 [ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_2y7rr"]
 [ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_2y7rr"]
+[ext_resource type="FontFile" uid="uid://cy67oha452op6" path="res://assets/Kenney Mini.ttf" id="9_dmy7c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2y7rr"]
 shader = ExtResource("1_uka6n")
@@ -60,6 +61,10 @@ shader_parameter/radius = 1.5
 [sub_resource type="MultiMesh" id="MultiMesh_copje"]
 transform_format = 1
 mesh = ExtResource("7_2y7rr")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmy7c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_copje"]
 
 [node name="Menu" type="Node3D"]
 script = ExtResource("1_aik4y")
@@ -123,7 +128,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 100
+theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
@@ -132,34 +137,39 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_dmy7c")
 theme_override_font_sizes/font_size = 100
-text = "SNAKER3000"
+text = "Snaker 3000"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 80)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 5
 
 [node name="Play_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 focus_next = NodePath("../Select_button")
-focus_previous = NodePath("../Exit_button")
-text = "PLAY"
+theme_override_fonts/font = ExtResource("9_dmy7c")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dmy7c")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_copje")
+text = "Start game"
 
 [node name="Select_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-focus_next = NodePath("../Exit_button")
+size_flags_horizontal = 4
+size_flags_vertical = 4
 focus_previous = NodePath("../Play_button")
-text = "SELECT PHASE"
-
-[node name="Exit_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-focus_next = NodePath("../Play_button")
-focus_previous = NodePath("../Select_button")
-text = "EXIT
-"
+theme_override_fonts/font = ExtResource("9_dmy7c")
+text = "Select Level"
 
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Play_button" to="." method="_on_play_button_pressed"]
