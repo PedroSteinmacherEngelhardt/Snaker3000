@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bv4ruujdu1ku0"]
+[gd_scene load_steps=18 format=3 uid="uid://b8tvotx7wgvrm"]
 
 [ext_resource type="Script" uid="uid://jlap4w0pms72" path="res://_menu.gd" id="1_aik4y"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_uka6n"]
@@ -62,9 +62,26 @@ shader_parameter/radius = 1.5
 transform_format = 1
 mesh = ExtResource("7_2y7rr")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmy7c"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_copje"]
+bg_color = Color(0.49487, 0.697392, 0.882925, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_copje"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8erti"]
+bg_color = Color(0.851579, 0.912891, 0.971543, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dmy7c"]
+bg_color = Color(0.392629, 0.622727, 0.829187, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Menu" type="Node3D"]
 script = ExtResource("1_aik4y")
@@ -145,7 +162,6 @@ text = "Snaker 3000"
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(140, 80)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -157,19 +173,23 @@ custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_next = NodePath("../Select_button")
 theme_override_fonts/font = ExtResource("9_dmy7c")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dmy7c")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_copje")
+theme_override_styles/focus = SubResource("StyleBoxFlat_copje")
+theme_override_styles/hover = SubResource("StyleBoxFlat_copje")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8erti")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dmy7c")
 text = "Start game"
 
-[node name="Select_button" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="SelectButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_previous = NodePath("../Play_button")
 theme_override_fonts/font = ExtResource("9_dmy7c")
+theme_override_styles/focus = SubResource("StyleBoxFlat_copje")
+theme_override_styles/hover = SubResource("StyleBoxFlat_copje")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8erti")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dmy7c")
 text = "Select Level"
 
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Play_button" to="." method="_on_play_button_pressed"]

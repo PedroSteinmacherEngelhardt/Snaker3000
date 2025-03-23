@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Snaker3000"
-run/main_scene="uid://diohxew8egcmn"
+run/main_scene="uid://b8tvotx7wgvrm"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -61,3 +61,4 @@ move_down={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=3

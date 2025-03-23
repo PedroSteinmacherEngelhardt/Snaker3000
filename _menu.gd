@@ -49,4 +49,4 @@ func _process(delta: float) -> void:
 
 
 func _on_play_button_pressed() -> void:
-	SceneTransition.change_scene("res://woo_o_ooord.tscn")
+	SceneTransition.change_scene("res://worlds/world1/level_1.tscn")
