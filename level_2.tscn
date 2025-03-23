@@ -1,27 +1,26 @@
-[gd_scene load_steps=13 format=3 uid="uid://b4jwbybad0fx"]
+[gd_scene load_steps=12 format=3 uid="uid://b4jwbybad0fx"]
 
 [ext_resource type="Script" uid="uid://ci0stj0wgtxlv" path="res://Level.gd" id="1_7dov7"]
-[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://snakegame/test_word.gdshader" id="2_7dov7"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_7dov7"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_ehv2h"]
-[ext_resource type="PackedScene" uid="uid://dnqa4m78arnjq" path="res://SuneikoTreisMill.tscn" id="4_15wb7"]
-[ext_resource type="MeshLibrary" uid="uid://m7twjsuhucgs" path="res://assets/kenney_dungeon/kenney_dungeon_blocks_mesh.tres" id="5_eoq84"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="4_15wb7"]
+[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="5_7dov7"]
 [ext_resource type="Script" uid="uid://dh3oul7yq0d08" path="res://grid_map.gd" id="6_yl73a"]
-[ext_resource type="PackedScene" uid="uid://egepk2y3m77f" path="res://deathzone.tscn" id="7_xbcdb"]
-[ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://grow!.tscn" id="8_7dov7"]
+[ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://scenes/grow!.tscn" id="8_7dov7"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7dov7"]
 shader = ExtResource("2_7dov7")
-shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
-shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
-shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/day_top_color = Color(0.600327, 0.593878, 0.474717, 1)
+shader_parameter/day_bottom_color = Color(0.835592, 0.74561, 0.422567, 1)
+shader_parameter/sunset_top_color = Color(0.811515, 0.770465, 0.579808, 1)
 shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
 shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
 shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
-shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
-shader_parameter/horizon_blur = 0.05
-shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/horizon_color = Color(0.759823, 0.811111, 0.491632, 1)
+shader_parameter/horizon_blur = 1.0
+shader_parameter/sun_color = Color(0.519059, 0.000201957, 0.522573, 1)
 shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
-shader_parameter/sun_size = 0.2
+shader_parameter/sun_size = 0.334
 shader_parameter/sun_blur = 10.0
 shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
 shader_parameter/moon_size = 0.06
@@ -41,9 +40,9 @@ shader_parameter/stars_speed = 1.0
 shader_parameter/overwritten_time = 0.0
 
 [sub_resource type="Sky" id="Sky_lp74u"]
-sky_material = SubResource("ShaderMaterial_cbhfs")
+sky_material = SubResource("ShaderMaterial_7dov7")
 
-[sub_resource type="Environment" id="Environment_oi51e"]
+[sub_resource type="Environment" id="Environment_ehv2h"]
 background_mode = 2
 sky = SubResource("Sky_lp74u")
 
@@ -53,46 +52,41 @@ sky = SubResource("Sky_lp74u")
 script = ExtResource("1_7dov7")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_oi51e")
+environment = SubResource("Environment_ehv2h")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.308486, -0.78623, -0.535425, 0, -0.562877, 0.826541, -0.951229, -0.254976, -0.17364, 0, 3.33928, 0)
+transform = Transform3D(0.575922, -0.549122, 0.605623, -0.116402, 0.678188, 0.725611, -0.809175, -0.488391, 0.326664, 0, 4.02799, 0)
 light_energy = 0.5
 shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.976503, 0, 0.215502, -0.0152578, 0.99749, -0.0691375, -0.214962, -0.0708011, -0.974053, 0, 0, 0)
 
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-0.947675, -0.0481766, 0.315579, 0.0757339, 0.926398, 0.368852, -0.310122, 0.373452, -0.874276, 1.80754, 5.17886, -16.3912)
+transform = Transform3D(0.842942, 0.138119, -0.519973, 0.0757339, 0.926398, 0.368852, 0.532647, -0.3503, 0.770439, -5.38126, 6.72744, 16.7764)
 fov = 54.4395
 script = ExtResource("3_ehv2h")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
-[node name="SuneikoTreisMill" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_15wb7")]
-process_mode = 4
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-camera = NodePath("../Camera")
+[node name="SuneikoTreisMill" parent="." instance=ExtResource("4_15wb7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.11805, 1.5, 3)
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("5_eoq84")
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.5, 0, 0.5)
+mesh_library = ExtResource("5_7dov7")
 physics_material = SubResource("PhysicsMaterial_5b03i")
-cell_size = Vector3(0.9, 0.9, 0.9)
+cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(1, 65526, 5, 2, 65526, 5, 3, 65526, 5, 4, 65526, 5, 327674, 65526, 5, 327674, 65527, 5, 327674, 65528, 5, 327674, 65525, 5, 327675, 65526, 5, 327675, 65527, 5, 327675, 65528, 5, 327673, 65527, 5, 327673, 65528, 5, 327673, 65526, 5, 327672, 65526, 5, 327671, 65526, 5, 327671, 65527, 5, 327672, 65527, 5, 327672, 65528, 5, 327672, 65531, 5, 327671, 65530, 5, 327671, 65529, 5, 327671, 65528, 5, 327674, 65529, 5, 327673, 65529, 5, 327673, 65530, 5, 327672, 65530, 5, 327672, 65529, 5, 327672, 65532, 5, 327672, 65533, 5, 327671, 65533, 5, 327671, 65532, 5, 327671, 65531, 5, 327671, 65534, 5, 327672, 65534, 5, 327672, 1, 5, 327671, 1, 5, 327671, 2, 5, 327671, 3, 5, 327672, 3, 5, 327672, 2, 5, 327676, 65527, 5, 196607, 65526, 5, 131072, 65526, 5, 131072, 65527, 5, 65527, 65532, 0, 65528, 65532, 0, 65529, 65532, 0, 65530, 65532, 0, 65531, 65532, 0, 65532, 65532, 0, 65533, 65532, 0, 65534, 65532, 0, 65535, 65532, 0, 0, 65532, 0, 0, 65533, 0, 65535, 65533, 0, 65534, 65533, 0, 65533, 65533, 0, 65532, 65533, 0, 65531, 65533, 0, 65530, 65533, 0, 65529, 65533, 0, 65528, 65533, 0, 65527, 65533, 0, 65526, 65533, 0, 65526, 65532, 0, 65526, 65534, 0, 65526, 65535, 0, 65527, 65535, 0, 65528, 65535, 0, 65529, 65535, 0, 65530, 65535, 0, 65531, 65535, 0, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 65534, 0, 0, 65534, 0, 65525, 65533, 0, 65527, 65534, 0, 65528, 65534, 0, 65529, 65534, 0, 65530, 65534, 0, 65531, 65534, 0, 65532, 65534, 0, 65533, 65534, 0, 65534, 65534, 0, 65525, 65534, 0, 65525, 65535, 0, 65525, 0, 0, 65526, 0, 0, 65527, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 65525, 65532, 0, 65526, 65531, 0, 65527, 65531, 0, 65528, 65531, 0, 65529, 65531, 0, 65530, 65531, 0, 65531, 65531, 0, 65532, 65531, 0, 65533, 65531, 0, 65534, 65531, 0, 65535, 65531, 0, 0, 65531, 0, 0, 0, 0, 0, 65535, 0, 65528, 65530, 0, 65529, 65530, 0, 65530, 65530, 0, 65531, 65530, 0, 65532, 65530, 0, 65533, 65530, 0, 65535, 65530, 0, 65534, 65530, 0, 65528, 65523, 0, 65528, 65524, 0, 65528, 65525, 0, 65528, 65526, 0, 131070, 65532, 0, 65526, 1, 0, 65527, 1, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 65531, 0, 0, 65530, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65528, 1, 0, 2, 65534, 0, 2, 65535, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 2, 65533, 0, 2, 65532, 0, 1, 65533, 0, 1, 65532, 0, -131070, 65533, 1048576, -131071, 65533, 1048576, -131072, 65533, 1048580, -65537, 65533, 1048580, -65538, 65533, 1048580, -65539, 65533, 1048580, -65540, 65533, 1048580, 65527, 65524, 1048576)
+"cells": PackedInt32Array(1, 65526, 5, 2, 65526, 5, 3, 65526, 5, 4, 65526, 5, 327674, 65526, 5, 327674, 65527, 5, 327674, 65528, 5, 327674, 65525, 5, 327675, 65526, 5, 327675, 65527, 5, 327675, 65528, 5, 327673, 65527, 5, 327673, 65528, 5, 327673, 65526, 5, 327672, 65526, 5, 327671, 65526, 5, 327671, 65527, 5, 327672, 65527, 5, 327672, 65528, 5, 327672, 65531, 5, 327671, 65530, 5, 327671, 65529, 5, 327671, 65528, 5, 327674, 65529, 5, 327673, 65529, 5, 327673, 65530, 5, 327672, 65530, 5, 327672, 65529, 5, 327672, 65532, 5, 327672, 65533, 5, 327671, 65533, 5, 327671, 65532, 5, 327671, 65531, 5, 327671, 65534, 5, 327672, 65534, 5, 327672, 1, 5, 327671, 1, 5, 327671, 2, 5, 327671, 3, 5, 327672, 3, 5, 327672, 2, 5, 327676, 65527, 5, 196607, 65526, 5, 131072, 65526, 5, 131072, 65527, 5, 65527, 65532, 0, 65528, 65532, 0, 65529, 65532, 0, 65530, 65532, 0, 65531, 65532, 0, 65532, 65532, 0, 65533, 65532, 0, 65534, 65532, 0, 65535, 65532, 0, 0, 65532, 0, 0, 65533, 0, 65535, 65533, 0, 65534, 65533, 0, 65533, 65533, 0, 65532, 65533, 0, 65531, 65533, 0, 65530, 65533, 0, 65529, 65533, 0, 65528, 65533, 0, 65527, 65533, 0, 65526, 65533, 0, 65526, 65532, 0, 65526, 65534, 0, 65526, 65535, 0, 65527, 65535, 0, 65528, 65535, 0, 65529, 65535, 0, 65530, 65535, 0, 65531, 65535, 0, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 65535, 65534, 0, 0, 65534, 0, 65525, 65533, 0, 65527, 65534, 0, 65528, 65534, 0, 65529, 65534, 0, 65530, 65534, 0, 65531, 65534, 0, 65532, 65534, 0, 65533, 65534, 0, 65534, 65534, 0, 65525, 65534, 0, 65525, 65535, 0, 65525, 0, 0, 65526, 0, 0, 65527, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 65525, 65532, 0, 65526, 65531, 0, 65527, 65531, 0, 65528, 65531, 0, 65529, 65531, 0, 65530, 65531, 0, 65531, 65531, 0, 65532, 65531, 0, 65533, 65531, 0, 65534, 65531, 0, 65535, 65531, 0, 0, 65531, 0, 0, 0, 0, 0, 65535, 0, 65528, 65530, 0, 65529, 65530, 0, 65530, 65530, 0, 65531, 65530, 0, 65532, 65530, 0, 65533, 65530, 0, 65535, 65530, 1441793, 65534, 65530, 0, 65528, 65524, 786433, 65528, 65525, 786433, 65528, 65526, 786433, 65526, 1, 0, 65527, 1, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 65531, 0, 0, 65530, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65528, 1, 0, 2, 65534, 0, 2, 65535, 0, 1, 0, 0, 1, 65535, 0, 1, 65534, 0, 2, 65532, 0, 1, 65533, 0, 1, 65532, 0, -65539, 65533, 1048580, -65540, 65533, 1048580, 65527, 65524, 786433, 65528, 65523, 786433, 2, 65533, 262144, 3, 65533, 262144, 65535, 65529, 1441793, -65537, 65530, 1441793, -65537, 65531, 1179649, -65537, 65532, 1179649, -65537, 65533, 1179649, -65537, 65534, 1179649, 131071, 0, 1245185)
 }
 script = ExtResource("6_yl73a")
-metadata/_editor_floor_ = Vector3(0, 0, 0)
-
-[node name="Deathzone" parent="." instance=ExtResource("7_xbcdb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.76705, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="Grows" type="Node3D" parent="."]
 
 [node name="GROW!" parent="Grows" instance=ExtResource("8_7dov7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33, 5, -3.194)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 0)
 
 [node name="GROW!2" parent="Grows" instance=ExtResource("8_7dov7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.725, 1.8, -11.347)
-
-[connection signal="player_is_ded" from="Deathzone" to="." method="_on_deathzone_player_is_ded"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 13)

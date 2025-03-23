@@ -39,12 +39,12 @@ shader_parameter/clouds_blur = 0.25
 shader_parameter/stars_speed = 1.0
 shader_parameter/overwritten_time = 0.0
 
-[sub_resource type="Sky" id="Sky_lp74u"]
+[sub_resource type="Sky" id="Sky_fmu3g"]
 sky_material = SubResource("ShaderMaterial_cbhfs")
 
 [sub_resource type="Environment" id="Environment_oi51e"]
 background_mode = 2
-sky = SubResource("Sky_lp74u")
+sky = SubResource("Sky_fmu3g")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5b03i"]
 
