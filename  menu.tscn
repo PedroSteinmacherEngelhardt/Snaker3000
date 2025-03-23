@@ -1,0 +1,102 @@
+[gd_scene load_steps=13 format=3 uid="uid://b8tvotx7wgvrm"]
+
+[ext_resource type="Script" uid="uid://jlap4w0pms72" path="res://_menu.gd" id="1_aik4y"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_uka6n"]
+[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_aik4y"]
+[ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_bvd5s"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="4_a3klu"]
+[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_a3klu"]
+[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_2y7rr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2y7rr"]
+shader = ExtResource("1_uka6n")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_oi51e"]
+sky_material = SubResource("ShaderMaterial_2y7rr")
+
+[sub_resource type="Environment" id="Environment_dmy7c"]
+background_mode = 2
+sky = SubResource("Sky_oi51e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmy7c"]
+render_priority = 0
+shader = ExtResource("6_a3klu")
+shader_parameter/albedo1 = Color(1, 1, 1, 1)
+shader_parameter/albedo2 = Color(0, 0.380392, 0.380392, 1)
+shader_parameter/noiseScale = 20.0
+shader_parameter/player_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interact_power = 0.5
+shader_parameter/radius = 1.5
+
+[sub_resource type="MultiMesh" id="MultiMesh_copje"]
+transform_format = 1
+mesh = ExtResource("7_2y7rr")
+
+[node name="Menu" type="Node3D"]
+script = ExtResource("1_aik4y")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dmy7c")
+
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.512642, 0.0443073, 0.857458, -0.858602, 0.0264544, 0.511959, -3.42299e-09, -0.998668, 0.051604, 0, 9.17033, 0)
+shadow_enabled = true
+
+[node name="GridMap" type="GridMap" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1.5, -0.5)
+mesh_library = ExtResource("2_aik4y")
+cell_size = Vector3(1, 1, 1)
+collision_layer = 524289
+collision_mask = 524289
+data = {
+"cells": PackedInt32Array(65534, 65534, 1, 65534, 65535, 1, 65534, 0, 1, 65534, 1, 1, 65534, 2, 1, 65535, 2, 1, 0, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 1, 2, 0, 1, 2, 65535, 1, 2, 65534, 1, 1, 65534, 1, 0, 65534, 1, 65535, 65534, 1, 65535, 65535, 1, 0, 65535, 1, 1, 65535, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 65535, 0, 1, 65535, 1, 1, 65533, 65533, 1, 65534, 65533, 1, 65535, 65533, 1, 0, 65533, 1, 1, 65533, 1, 2, 65533, 1, 3, 65533, 1, 3, 65534, 1, 3, 65535, 1, 3, 0, 1, 3, 1, 1, 3, 2, 1, 3, 3, 1, 2, 3, 1, 1, 3, 1, 0, 3, 1, 65535, 3, 1, 65534, 3, 1, 65533, 3, 1, 65533, 2, 1, 65533, 1, 1, 65533, 0, 1, 65533, 65535, 1, 65533, 65534, 1, 65536, 0, 0, 131071, 0, 0, 65537, 0, 0, 65536, 1, 0, 65536, 65535, 0, 65537, 65535, 0, 65538, 0, 0, 65537, 1, 0, 131071, 1, 0, 131071, 65535, 0, 131070, 0, 0, 65536, 2, 0, 65536, 65534, 0, 196607, 0, 1, 131072, 1, 1, 131072, 0, 1, 131073, 0, 1, 131072, 65535, 1, 4, 2, 1, 4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 2, 65532, 1, 1, 65532, 1, 0, 65532, 1, 65535, 65532, 1, 65534, 65532, 1, 65532, 65534, 1, 65532, 65535, 1, 65532, 0, 1, 65532, 1, 1, 65532, 2, 1, 65534, 4, 1, 65535, 4, 1, 0, 4, 1, 1, 4, 1, 2, 4, 1, 65534, 65531, 1, 65535, 65531, 1, 0, 65531, 1, 1, 65531, 1, 2, 65531, 1, 65533, 65532, 1, 65532, 65533, 1, 3, 65532, 1, 4, 65533, 1, 5, 65534, 1, 5, 65535, 1, 5, 0, 1, 5, 1, 1, 5, 2, 1, 4, 3, 1, 3, 4, 1, 2, 5, 1, 1, 5, 1, 0, 5, 1, 65535, 5, 1, 65534, 5, 1, 65533, 4, 1, 65532, 3, 1, 65531, 2, 1, 65531, 1, 1, 65531, 0, 1, 65531, 65535, 1, 65531, 65534, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="camera_anchor" type="Node3D" parent="."]
+
+[node name="Camera" type="Camera3D" parent="camera_anchor"]
+transform = Transform3D(1, 0, 0, 0, 0.690769, 0.723076, 0, -0.723076, 0.690769, 0, 10.8569, 12.5742)
+script = ExtResource("3_bvd5s")
+metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
+
+[node name="Snaker3000" parent="." instance=ExtResource("4_a3klu")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_dmy7c")
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
+multimesh = SubResource("MultiMesh_copje")

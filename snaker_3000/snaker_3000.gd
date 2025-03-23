@@ -12,6 +12,7 @@ var _segments: Array[Node3D] = []
 		initial_size = max(1, value)
 		_setup_segments()
 
+var pause : bool = false
 var _should_grow: bool = false
 
 @onready var camera: Camera = get_viewport().get_camera_3d()
@@ -44,7 +45,7 @@ func _on_movement_input(direction: Vector3):
 
 
 func _move(direction: Vector3):
-	if will_collide_if_moved(_segments[0].global_position + direction):
+	if will_collide_if_moved(_segments[0].global_position + direction) and !pause:
 		camera.add_trauma(.5)
 	else:
 		val_list.clear()
@@ -68,6 +69,8 @@ func move_body():
 
 
 func _physics_process(delta):
+	%MultiMeshInstance3D.material_override.set_shader_parameter("player_pos",_segments.map(func(e): return e.global_position))
+	
 	if not is_on_floor():
 		velocity = velocity + get_gravity() * delta * 2
 		

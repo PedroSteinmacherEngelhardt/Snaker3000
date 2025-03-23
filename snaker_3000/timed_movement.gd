@@ -18,6 +18,9 @@ signal on_timed_input(direction: Vector3)
 
 
 func _input(event):
+	if get_parent().pause:
+		return
+	
 	for action in _actions_map.keys():
 		var direction = _actions_map[action]
 		if event.is_action_pressed(action):

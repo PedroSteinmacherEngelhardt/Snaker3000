@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4n3rq4m2f585"]
+[gd_scene load_steps=17 format=3 uid="uid://c4n3rq4m2f585"]
 
 [ext_resource type="Script" uid="uid://yxq2e8yaasay" path="res://worlds/world.gd" id="1_12do3"]
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="1_m138w"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_wp1yw"]
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_c7htk"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_c7htk"]
+[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="6_3euow"]
+[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_aprxe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_12do3"]
 shader = ExtResource("1_wp1yw")
@@ -37,12 +39,12 @@ shader_parameter/clouds_blur = 0.25
 shader_parameter/stars_speed = 1.0
 shader_parameter/overwritten_time = 0.0
 
-[sub_resource type="Sky" id="Sky_oi51e"]
+[sub_resource type="Sky" id="Sky_12do3"]
 sky_material = SubResource("ShaderMaterial_12do3")
 
 [sub_resource type="Environment" id="Environment_3euow"]
 background_mode = 2
-sky = SubResource("Sky_oi51e")
+sky = SubResource("Sky_12do3")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fa4vq"]
 
@@ -53,6 +55,20 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_aprxe"]
 material = SubResource("StandardMaterial3D_3euow")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aprxe"]
+render_priority = 0
+shader = ExtResource("6_aprxe")
+shader_parameter/albedo1 = Color(0, 0, 0, 1)
+shader_parameter/albedo2 = Color(0, 0, 0, 1)
+shader_parameter/noiseScale = 20.0
+shader_parameter/player_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interact_power = 0.5
+shader_parameter/radius = 1.5
+
+[sub_resource type="MultiMesh" id="MultiMesh_12do3"]
+transform_format = 1
+mesh = ExtResource("6_3euow")
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_12do3")
@@ -81,11 +97,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="Snaker3000" parent="Spawn" instance=ExtResource("1_m138w")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92391, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.92391, 1.74715)
 
 [node name="GridMap" type="GridMap" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -1.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 mesh_library = ExtResource("2_c7htk")
 cell_size = Vector3(1, 1, 1)
 collision_layer = 524289
@@ -96,22 +112,25 @@ data = {
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
 [node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(0.54978, -0.254023, 0.795747, -0.0692286, 0.935504, 0.346467, -0.832436, -0.245569, 0.496736, 8.00991, 3.0611, 5.27193)
+transform = Transform3D(1, 0, 0, 0, 0.875608, 0.483023, 0, -0.483023, 0.875608, 0.240912, 3.97538, 7.54721)
 script = ExtResource("3_c7htk")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-layers = 524288
+transform = Transform3D(0.832846, -0.338041, 0.438287, -0.408869, 0.158005, 0.898811, -0.373087, -0.927773, -0.00662033, 0, 0, 0)
+layers = 524289
+light_energy = 0.5
+light_specular = 2.0
 shadow_enabled = true
-shadow_transmittance_bias = 6.009
-shadow_caster_mask = 4294443008
+shadow_caster_mask = 4294443009
 
-[node name="sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.451812, -0.17033, 0.875702, -0.892113, -0.086264, 0.4435, 0, -0.981604, -0.190929, 0, 7.07186, -0.140445)
-layers = 524288
-shadow_enabled = true
-shadow_caster_mask = 4294443007
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_aprxe")
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
+multimesh = SubResource("MultiMesh_12do3")
 
 [connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]
 [connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]
