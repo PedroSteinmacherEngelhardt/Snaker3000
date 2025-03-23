@@ -190,6 +190,8 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_copje")
 theme_override_styles/hover = SubResource("StyleBoxFlat_copje")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_8erti")
 theme_override_styles/normal = SubResource("StyleBoxFlat_dmy7c")
-text = "Select Level"
+text = "Credits
+"
 
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]

@@ -50,3 +50,7 @@ func _process(delta: float) -> void:
 
 func _on_play_button_pressed() -> void:
 	SceneTransition.change_scene("res://worlds/world1/level_1.tscn")
+
+
+func _on_select_button_pressed() -> void:
+	SceneTransition.change_scene("res://takiu_for_playing.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1xbmiu567q2v"]
+[gd_scene load_steps=15 format=3 uid="uid://c1xbmiu567q2v"]
 
 [ext_resource type="Script" uid="uid://d3pqfo37g6uc" path="res://tankiu.gd" id="1_mgr3d"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k4xn6"]
@@ -8,17 +8,18 @@
 [ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_8egxb"]
 [ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_yfpb5"]
 [ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_u4rij"]
+[ext_resource type="FontFile" uid="uid://cy67oha452op6" path="res://assets/Kenney Mini.ttf" id="9_k4xn6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2y7rr"]
 shader = ExtResource("2_k4xn6")
-shader_parameter/day_top_color = Color(0.909804, 0.580392, 0, 1)
-shader_parameter/day_bottom_color = Color(0.780481, 0.753174, 0.463973, 1)
+shader_parameter/day_top_color = Color(1, 0.67451, 0.109804, 1)
+shader_parameter/day_bottom_color = Color(0.826325, 0, 0.11102, 1)
 shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
 shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
 shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
 shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
-shader_parameter/horizon_color = Color(0.667847, 0.628529, 0.424922, 1)
-shader_parameter/horizon_blur = 0.05
+shader_parameter/horizon_color = Color(0.836312, 0.508231, 0.168369, 1)
+shader_parameter/horizon_blur = 1.0
 shader_parameter/sun_color = Color(10, 8, 1, 1)
 shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
 shader_parameter/sun_size = 0.2
@@ -26,7 +27,7 @@ shader_parameter/sun_blur = 10.0
 shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
 shader_parameter/moon_size = 0.06
 shader_parameter/moon_blur = 0.1
-shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_edge_color = Color(0.776449, 0.834767, 0.820805, 1)
 shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
 shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
 shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
@@ -43,7 +44,7 @@ shader_parameter/overwritten_time = 0.0
 [sub_resource type="Sky" id="Sky_oi51e"]
 sky_material = SubResource("ShaderMaterial_2y7rr")
 
-[sub_resource type="Environment" id="Environment_dmy7c"]
+[sub_resource type="Environment" id="Environment_mgr3d"]
 background_mode = 2
 sky = SubResource("Sky_oi51e")
 
@@ -65,7 +66,7 @@ mesh = ExtResource("7_yfpb5")
 script = ExtResource("1_mgr3d")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_dmy7c")
+environment = SubResource("Environment_mgr3d")
 
 [node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(0.512642, 0.0443073, 0.857458, -0.858602, 0.0264544, 0.511959, -3.42299e-09, -0.998668, 0.051604, 0, 9.17033, 0)
@@ -123,41 +124,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 100
+theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 270
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_k4xn6")
 theme_override_font_sizes/font_size = 100
 text = "THX 4 PLAYING"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 8
 alignment = 1
 
 [node name="Creditos" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-Aqui vao os creditos chagtpt
-
-"
+theme_override_fonts/font = ExtResource("9_k4xn6")
+text = "github.com/PedroSteinmacherEngelhardt
+github.com/noahstelmak
+github.com/koddoki
+this font: kenney.nl"
+horizontal_alignment = 1
 
 [node name="BACK_TO_START" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "BACK TO START
+theme_override_fonts/font = ExtResource("9_k4xn6")
+text = "BACK TO MENU
 "
 
 [connection signal="button_up" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/BACK_TO_START" to="." method="_on_back_to_start_button_up"]
