@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://c1xbmiu567q2v"]
+[gd_scene load_steps=15 format=3 uid="uid://f16s763l5kju"]
 
-[ext_resource type="Script" uid="uid://d3pqfo37g6uc" path="res://tankiu.gd" id="1_mgr3d"]
+[ext_resource type="Script" path="res://tankiu.gd" id="1_mgr3d"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_k4xn6"]
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="3_8f2lc"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="4_1g5jk"]
@@ -152,7 +152,8 @@ theme_override_fonts/font = ExtResource("9_k4xn6")
 text = "github.com/PedroSteinmacherEngelhardt
 github.com/noahstelmak
 github.com/koddoki
-this font: kenney.nl"
+this font: kenney.nl
+background-music: https://paypal.me/rib08?country.x=IN&locale.x=en_GB"
 horizontal_alignment = 1
 
 [node name="BACK_TO_START" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]

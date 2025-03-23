@@ -47,7 +47,10 @@ func _on_movement_input(direction: Vector3):
 func _move(direction: Vector3):
 	if will_collide_if_moved(_segments[0].global_position + direction) and !pause:
 		camera.add_trauma(.5)
+		$hitNoise.get_children().pick_random().play()
 	else:
+		if is_on_floor() and not pause:
+			$Sounds.play()
 		val_list.clear()
 		val_list.resize(_segments.size())
 		val_list.fill(Vector3.ZERO)
@@ -112,7 +115,14 @@ func _add_segment():
 	
 	var body := MeshInstance3D.new()
 	body.mesh = box
-	body.material_override = material
+	
+	if _segments.size() % 2 == 0:
+		body.scale *=1.01
+	
+	var material1 := StandardMaterial3D.new()
+	material1.albedo_color = Color(randf(),randf(),randf())
+	
+	body.material_override = material1
 	body.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	body.set_layer_mask_value(1,false)
 	body.set_layer_mask_value(20,true)

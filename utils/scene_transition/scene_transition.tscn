@@ -1,6 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://5yjyyy2c4h1q"]
+[gd_scene load_steps=9 format=3 uid="uid://5yjyyy2c4h1q"]
 
 [ext_resource type="Script" uid="uid://dgm15vv25acxg" path="res://utils/scene_transition/scene_transition.gd" id="1_cfuue"]
+[ext_resource type="AudioStream" uid="uid://cjn8xgoibx68k" path="res://assets/wind-chimes-with-wind-and-light-rain-171624.mp3" id="2_5274r"]
+[ext_resource type="AudioStream" uid="uid://b6mvqkv6uaban" path="res://assets/pop.mp3" id="3_tvaqd"]
+[ext_resource type="AudioStream" uid="uid://htx3a0583dsi" path="res://assets/ahhh.mp3" id="4_jomsa"]
+[ext_resource type="AudioStream" uid="uid://bub7wy7wqwdvk" path="res://assets/trim.mp3" id="5_hsfj4"]
 
 [sub_resource type="Animation" id="Animation_5274r"]
 length = 0.001
@@ -55,3 +59,23 @@ color = Color(1, 1, 1, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_tvaqd")
 }
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_5274r")
+volume_db = -2.0
+autoplay = true
+
+[node name="Pop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tvaqd")
+volume_db = -3.0
+pitch_scale = 1.5
+
+[node name="Ahhh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jomsa")
+volume_db = -2.0
+
+[node name="Trim" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_hsfj4")
+volume_db = -20.0
+
+[connection signal="finished" from="AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]

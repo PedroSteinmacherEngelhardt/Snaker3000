@@ -5,4 +5,6 @@ extends Area3D
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
+		SceneTransition.trilim()
 		SceneTransition.change_scene(next_scene)
+		
