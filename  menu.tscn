@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8tvotx7wgvrm"]
+[gd_scene load_steps=14 format=3 uid="uid://b8tvotx7wgvrm"]
 
 [ext_resource type="Script" uid="uid://jlap4w0pms72" path="res://_menu.gd" id="1_aik4y"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_uka6n"]
@@ -7,16 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="4_a3klu"]
 [ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_a3klu"]
 [ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_2y7rr"]
+[ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_2y7rr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2y7rr"]
 shader = ExtResource("1_uka6n")
-shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
-shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/day_top_color = Color(0.909804, 0.580392, 0, 1)
+shader_parameter/day_bottom_color = Color(0.780481, 0.753174, 0.463973, 1)
 shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
 shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
 shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
 shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
-shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_color = Color(0.667847, 0.628529, 0.424922, 1)
 shader_parameter/horizon_blur = 0.05
 shader_parameter/sun_color = Color(10, 8, 1, 1)
 shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
@@ -80,7 +81,7 @@ collision_mask = 524289
 data = {
 "cells": PackedInt32Array(65534, 65534, 1, 65534, 65535, 1, 65534, 0, 1, 65534, 1, 1, 65534, 2, 1, 65535, 2, 1, 0, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 1, 2, 0, 1, 2, 65535, 1, 2, 65534, 1, 1, 65534, 1, 0, 65534, 1, 65535, 65534, 1, 65535, 65535, 1, 0, 65535, 1, 1, 65535, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 65535, 0, 1, 65535, 1, 1, 65533, 65533, 1, 65534, 65533, 1, 65535, 65533, 1, 0, 65533, 1, 1, 65533, 1, 2, 65533, 1, 3, 65533, 1, 3, 65534, 1, 3, 65535, 1, 3, 0, 1, 3, 1, 1, 3, 2, 1, 3, 3, 1, 2, 3, 1, 1, 3, 1, 0, 3, 1, 65535, 3, 1, 65534, 3, 1, 65533, 3, 1, 65533, 2, 1, 65533, 1, 1, 65533, 0, 1, 65533, 65535, 1, 65533, 65534, 1, 65536, 0, 0, 131071, 0, 0, 65537, 0, 0, 65536, 1, 0, 65536, 65535, 0, 65537, 65535, 0, 65538, 0, 0, 65537, 1, 0, 131071, 1, 0, 131071, 65535, 0, 131070, 0, 0, 65536, 2, 0, 65536, 65534, 0, 196607, 0, 1, 131072, 1, 1, 131072, 0, 1, 131073, 0, 1, 131072, 65535, 1, 4, 2, 1, 4, 1, 1, 4, 0, 1, 4, 65535, 1, 4, 65534, 1, 2, 65532, 1, 1, 65532, 1, 0, 65532, 1, 65535, 65532, 1, 65534, 65532, 1, 65532, 65534, 1, 65532, 65535, 1, 65532, 0, 1, 65532, 1, 1, 65532, 2, 1, 65534, 4, 1, 65535, 4, 1, 0, 4, 1, 1, 4, 1, 2, 4, 1, 65534, 65531, 1, 65535, 65531, 1, 0, 65531, 1, 1, 65531, 1, 2, 65531, 1, 65533, 65532, 1, 65532, 65533, 1, 3, 65532, 1, 4, 65533, 1, 5, 65534, 1, 5, 65535, 1, 5, 0, 1, 5, 1, 1, 5, 2, 1, 4, 3, 1, 3, 4, 1, 2, 5, 1, 1, 5, 1, 0, 5, 1, 65535, 5, 1, 65534, 5, 1, 65533, 4, 1, 65532, 3, 1, 65531, 2, 1, 65531, 1, 1, 65531, 0, 1, 65531, 65535, 1, 65531, 65534, 1)
 }
-metadata/_editor_floor_ = Vector3(0, 1, 0)
+metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="camera_anchor" type="Node3D" parent="."]
 
@@ -100,3 +101,4 @@ cast_shadow = 0
 ignore_occlusion_culling = true
 gi_mode = 0
 multimesh = SubResource("MultiMesh_copje")
+script = ExtResource("8_2y7rr")

@@ -9,52 +9,35 @@ signal world_completed(world_name: String);
 
 
 var _replaceble_cells = {
-	2: "res://scenes/grow!.tscn"
+	2: preload("res://scenes/grow!.tscn")
 }
 
 
 func _ready():
 	_replace_gridmap()
-	#%Snaker3000.connect("died",_on_snaker_3000_died)
-	#$Death.connect("body_entered", _on_snaker_3000_died)
 
 
 func _replace_gridmap():
-	var gridmap = %GridMap
+	var gridmap :GridMap= %GridMap
 	var grass_positions = []
 	var instance_transforms = []
 
 	for cell in gridmap.get_used_cells():
 		var tile_id = gridmap.get_cell_item(cell)
+		
+		if _replaceble_cells.has(tile_id):
+			var scene = _replaceble_cells[tile_id].instantiate()
+			add_child(scene)
+			scene.position = %GridMap.to_global(cell) + Vector3(0.5, 0.5, 0.5)
+			%GridMap.set_cell_item(cell, -1)
+		
+		elif tile_id == 1:
+			var up_cell = gridmap.get_cell_item(cell + Vector3i.UP)
+			if up_cell == -1 or _replaceble_cells.has(up_cell):
+				var base_pos = gridmap.map_to_local(cell) + gridmap.position + Vector3(0,0.5,0)
+				grass_positions.append(base_pos)
 	
-		if tile_id == 1:
-			var base_pos = gridmap.map_to_local(cell)
-			
-			for _a in range(blades_per_tile):
-				var random_offset = Vector3(
-					randf_range(-position_variance, position_variance),
-					0,
-					randf_range(-position_variance, position_variance)
-				)
-				
-				var world_pos = base_pos + random_offset + gridmap.position
-				world_pos.y += 0.5
-				
-				var rotation = Basis()
-				rotation = rotation.rotated(Vector3.UP, randf_range(0, TAU))  # Random Y rotation (yaw)
-				rotation = rotation.rotated(Vector3.RIGHT, randf_range(-0.2, 0.2))  # Random X inclination (tilt forward/back)
-				rotation = rotation.rotated(Vector3.FORWARD, randf_range(-0.2, 0.2))  # Random Z inclination (tilt left/right)
-				
-				var transform = Transform3D(rotation, world_pos)
-				transform = transform.scaled(scale)
-				
-				instance_transforms.append(transform)
-	
-	var multimesh = %MultiMeshInstance3D.multimesh
-	multimesh.instance_count = instance_transforms.size()
-	
-	for i in range(instance_transforms.size()):
-		multimesh.set_instance_transform(i, instance_transforms[i])
+	%MultiMeshInstance3D.populate_grass(grass_positions)
 
 
 func _on_death_body_entered(maybeASnaker3000):
@@ -71,5 +54,4 @@ func _on_exit_body_entered(maybeASnaker3000):
 
 
 func _on_snaker_3000_died(body):
-	print("aaaa")
 	get_tree().reload_current_scene()

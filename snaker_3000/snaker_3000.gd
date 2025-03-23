@@ -113,6 +113,7 @@ func _add_segment():
 	var body := MeshInstance3D.new()
 	body.mesh = box
 	body.material_override = material
+	body.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	body.set_layer_mask_value(1,false)
 	body.set_layer_mask_value(20,true)
 	
