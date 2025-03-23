@@ -1,0 +1,142 @@
+[gd_scene load_steps=19 format=3 uid="uid://diohxew8egcmn"]
+
+[ext_resource type="Script" uid="uid://yxq2e8yaasay" path="res://worlds/world.gd" id="1_47pk5"]
+[ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_do4l1"]
+[ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://scenes/grow!.tscn" id="3_leb5m"]
+[ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="4_r6rq7"]
+[ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="5_rfb7v"]
+[ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="6_a3eyq"]
+[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="7_63tcn"]
+[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="8_vd3i4"]
+[ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="9_rqlvh"]
+[ext_resource type="PackedScene" uid="uid://p6dx2f0uple7" path="res://utils/exit/exit.tscn" id="10_6gx7n"]
+[ext_resource type="PackedScene" uid="uid://d2hbf4v0hd7wm" path="res://utils/death/death.tscn" id="11_2xb0b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cbhfs"]
+shader = ExtResource("4_r6rq7")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_oi51e"]
+sky_material = SubResource("ShaderMaterial_cbhfs")
+
+[sub_resource type="Environment" id="Environment_oi51e"]
+background_mode = 2
+sky = SubResource("Sky_oi51e")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_81pxu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qpg8x"]
+seamless = true
+seamless_blend_skirt = 0.7
+normalize = false
+noise = SubResource("FastNoiseLite_81pxu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dhfl"]
+render_priority = 0
+shader = ExtResource("8_vd3i4")
+shader_parameter/albedo1 = Color(0.306777, 0.858686, 0.211016, 1)
+shader_parameter/albedo2 = Color(0.164706, 0.45098, 0.117647, 1)
+shader_parameter/noise = SubResource("NoiseTexture2D_qpg8x")
+shader_parameter/noiseScale = 10.0
+shader_parameter/player_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interact_power = 0.5
+shader_parameter/radius = 1.5
+
+[sub_resource type="MultiMesh" id="MultiMesh_xtamv"]
+transform_format = 1
+mesh = ExtResource("7_63tcn")
+
+[node name="WooOOoord" type="Node3D"]
+script = ExtResource("1_47pk5")
+
+[node name="GridMap" type="GridMap" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -1.5, 0.5)
+mesh_library = ExtResource("2_do4l1")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65532, 65532, 0, 65533, 65532, 131072, 65534, 65532, 0, 65535, 65532, 0, 0, 65532, 0, 65532, 65533, 1, 65533, 65533, 131072, 65534, 65533, 1, 65535, 65533, 1, 0, 65533, 1, 65532, 65535, 1, 65533, 65535, 131072, 65534, 65535, 1, 65535, 65535, 1, 0, 65535, 1, 65532, 65531, 1, 65533, 65531, 1, 65534, 65531, 1, 65535, 65531, 1, 0, 65531, 1, 1, 65531, 1, 2, 65531, 1, 3, 65531, 1, 4, 65531, 1, 5, 65531, 1, 6, 65531, 1, 7, 65531, 1, 65543, 65531, 1, 65542, 65531, 1, 65541, 65531, 1, 65540, 65531, 1, 65539, 65531, 1, 65538, 65531, 1, 65537, 65531, 1, 65536, 65531, 1, 131071, 65531, 1, 131069, 65531, 1, 131068, 65531, 1, 131070, 65531, 1, 131068, 65532, 0, 131069, 65532, 0, 131070, 65532, 0, 131071, 65532, 0, 65536, 65532, 0, 65537, 65532, 0, 65538, 65532, 0, 65539, 65532, 0, 196604, 65531, 1, 196605, 65531, 1, 196606, 65531, 1, 196607, 65531, 1, 131072, 65531, 1, 131073, 65531, 1, 131074, 65531, 1, 131075, 65531, 1, 131076, 65531, 1, 131077, 65531, 1, 131078, 65531, 1, 131079, 65531, 1, 131080, 65531, 1, 262140, 65531, 1, 262141, 65531, 1, 262142, 65531, 1, 262143, 65531, 1, 196608, 65531, 1, 196609, 65531, 1, 196610, 65531, 1, 196611, 65531, 1, 196612, 65531, 1, 196613, 65531, 1, 196614, 65531, 1, 196615, 65531, 1, 196616, 65531, 1, 262141, 65532, 0, 262142, 65532, 0, 262143, 65532, 0, 196608, 65532, 0, 196609, 65532, 0, 196610, 65532, 0, 196611, 65532, 0, 196612, 65532, 131073, 262144, 65532, 0, 327679, 65532, 0, 327678, 65532, 0, 327677, 65532, 0, 327676, 65532, 0, 393212, 65531, 1, 393213, 65531, 1, 393214, 65531, 1, 393215, 65531, 1, 327680, 65531, 1, 327682, 65531, 1, 327683, 65531, 1, 327684, 65531, 1, 262152, 65531, 1, 327688, 65531, 1, 262153, 65531, 1, 327689, 65531, 1, 393223, 65531, 1, 393222, 65531, 1, 393221, 65531, 1, 393220, 65531, 1, 393219, 65531, 1, 393218, 65531, 1, 393217, 65531, 1, 393216, 65531, 1, 458751, 65531, 1, 458750, 65531, 1, 458749, 65531, 1, 458748, 65531, 1, 524285, 65531, 1, 524286, 65531, 1, 524287, 65531, 1, 458752, 65531, 1, 458753, 65531, 1, 458754, 65531, 1, 458755, 65531, 1, 458756, 65531, 1, 458757, 65531, 1, 458758, 65531, 1, 65544, 65531, 1, 65545, 65531, 1, 131081, 65531, 1, 196617, 65531, 1, 131067, 65531, 1, 196603, 65531, 1, 262139, 65531, 1, 327675, 65531, 1, 393211, 65531, 1, 7, 2, 0, 65543, 2, 1, 65531, 65531, 1, 8, 65531, 1, 65532, 0, 1, 65533, 0, 131072, 65534, 0, 1, 65535, 0, 1, 0, 0, 1, 0, 65534, 1, 65535, 65534, 1, 65534, 65534, 1, 65533, 65534, 131072, 65532, 65534, 1, 262140, 65532, 0, 327687, 65531, 1, 327686, 65531, 1, 327685, 65531, 1, 393214, 65532, 1, 393213, 65532, 1, 393212, 65532, 1, 8, 2, 1, 6, 2, 1, 7, 3, 1, 7, 1, 1, 393215, 65532, 131073, 327680, 65532, 131073, 262145, 65532, 131073, 262146, 65532, 131073, 262147, 65532, 131073, 196613, 65532, 131073, 262151, 65531, 131073, 262150, 65531, 131073, 262149, 65531, 131073, 262148, 65531, 131073, 327681, 65531, 131073, 65533, 1, 131072, 65533, 2, 131072, 65534, 2, 131072, 65535, 2, 131072, 0, 2, 131072, 65534, 1, 131073, 65535, 1, 131073, 0, 1, 131073, 65532, 1, 131073, 65532, 2, 131073, 65532, 3, 131073, 65533, 3, 131073, 65534, 3, 131073, 65535, 3, 131073, 0, 3, 131073)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GROWS!" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="GROW!3" parent="GROWS!" instance=ExtResource("3_leb5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.84889, 5.48245, -2.95833)
+
+[node name="GROW!4" parent="GROWS!" instance=ExtResource("3_leb5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00614, 3.12645, -2.95833)
+
+[node name="GROW!5" parent="GROWS!" instance=ExtResource("3_leb5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.06569, 1.58708, -2.95833)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oi51e")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0265493, -0.999154, 0.0314158, 0.234543, 0.0243235, 0.971801, -0.971743, 0.033169, 0.233699, 0, 3.33928, 0)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0182419, 0.999833, -0.00144738, 0.998439, -0.0182929, -0.0527769, -0.0527945, -0.000482351, -0.998605, 0, 0, 0)
+sky_mode = 2
+
+[node name="Camera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.957938, 0.286977, 0, -0.286977, 0.957938, 2.86172, 7.18896, 11.4682)
+script = ExtResource("5_rfb7v")
+metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
+
+[node name="Snaker3000" parent="." instance=ExtResource("6_a3eyq")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0311589, 0, 0.0500262)
+
+[node name="GrassStraw" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.9262, -1.72787, 5.76708)
+mesh = ExtResource("7_63tcn")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_6dhfl")
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
+multimesh = SubResource("MultiMesh_xtamv")
+script = ExtResource("9_rqlvh")
+blades_per_tile = 2000
+
+[node name="Exit" parent="." instance=ExtResource("10_6gx7n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.97834, 0.995, 2.97818)
+next_scene = "res://worlds/world5/world5.tscn"
+
+[node name="Death" parent="." instance=ExtResource("11_2xb0b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36835, -3.8318, 0.495)
