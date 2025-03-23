@@ -73,7 +73,7 @@ script = ExtResource("3_b60u5")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [node name="Snaker3000" parent="." instance=ExtResource("4_kmy7e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -6)
 
 [node name="GridMap" type="GridMap" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 0, 0.5)
