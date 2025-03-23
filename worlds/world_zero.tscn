@@ -9,7 +9,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8437, 3.05134, -0.0002508
 
 [node name="Snaker3000" parent="Spawn" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42652, 3.92391, 0)
-visible = false
 initial_size = 4
 
 [node name="GridMap" parent="." index="4"]
@@ -20,3 +19,6 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Camera" parent="." index="5"]
 transform = Transform3D(0.999999, 0.000318795, -0.0010139, -4.45748e-09, 0.953956, 0.299947, 0.00106286, -0.299947, 0.953955, 2.61389, 3.8462, 9.7376)
+
+[node name="DirectionalLight3D" parent="." index="6"]
+transform = Transform3D(0.582191, -0.228549, -0.780269, 0.722399, -0.294962, 0.625409, -0.373087, -0.927773, -0.00662064, 0, 0, 0)

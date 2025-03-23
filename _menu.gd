@@ -11,7 +11,18 @@ var last_pos := Vector3.ZERO
 func _ready() -> void:
 	snaker_3000.pause = true
 	update_snake_position()
+	
+	%Play_button.grab_focus()
 	super()
+
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("move_south"):
+		var focus := get_viewport().gui_get_focus_owner()
+		focus.find_next_valid_focus().grab_focus()
+	elif Input.is_action_just_pressed("move_north"):
+		var focus := get_viewport().gui_get_focus_owner()
+		focus.find_prev_valid_focus().grab_focus()
 
 
 func update_snake_position():
@@ -35,3 +46,7 @@ func update_snake_position():
 
 func _process(delta: float) -> void:
 	camera_anchor.rotation.y -= delta * 0.2
+
+
+func _on_play_button_pressed() -> void:
+	SceneTransition.change_scene("res://woo_o_ooord.tscn")

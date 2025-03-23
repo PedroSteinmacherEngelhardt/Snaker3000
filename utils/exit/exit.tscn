@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://p6dx2f0uple7"]
+
+[ext_resource type="Script" uid="uid://g2ljmf1gksod" path="res://utils/exit/exit.gd" id="1_ctbet"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_12do3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3euow"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_aprxe"]
+material = SubResource("StandardMaterial3D_3euow")
+
+[node name="Exit" type="Area3D"]
+script = ExtResource("1_ctbet")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_12do3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_aprxe")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

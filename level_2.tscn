@@ -1,12 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://b4jwbybad0fx"]
+[gd_scene load_steps=20 format=3 uid="uid://b4jwbybad0fx"]
 
-[ext_resource type="Script" uid="uid://ci0stj0wgtxlv" path="res://Level.gd" id="1_7dov7"]
+[ext_resource type="Script" uid="uid://yxq2e8yaasay" path="res://worlds/world.gd" id="1_15wb7"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="2_7dov7"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_ehv2h"]
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="4_15wb7"]
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="5_7dov7"]
-[ext_resource type="Script" uid="uid://dh3oul7yq0d08" path="res://grid_map.gd" id="6_yl73a"]
+[ext_resource type="Script" uid="uid://c34vo81sdqk72" path="res://grid_map.gd" id="6_yl73a"]
+[ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="7_ehv2h"]
 [ext_resource type="PackedScene" uid="uid://cpofqrkflt3nr" path="res://scenes/grow!.tscn" id="8_7dov7"]
+[ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="8_15wb7"]
+[ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="9_eoq84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7dov7"]
 shader = ExtResource("2_7dov7")
@@ -48,8 +51,33 @@ sky = SubResource("Sky_lp74u")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5b03i"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yl73a"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_15wb7"]
+seamless = true
+seamless_blend_skirt = 0.7
+normalize = false
+noise = SubResource("FastNoiseLite_yl73a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbcdb"]
+render_priority = 0
+shader = ExtResource("7_ehv2h")
+shader_parameter/albedo1 = Color(0.306777, 0.858686, 0.211016, 1)
+shader_parameter/albedo2 = Color(0.164706, 0.45098, 0.117647, 1)
+shader_parameter/noise = SubResource("NoiseTexture2D_15wb7")
+shader_parameter/noiseScale = 10.0
+shader_parameter/player_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interact_power = 0.5
+shader_parameter/radius = 1.5
+
+[sub_resource type="MultiMesh" id="MultiMesh_s77qv"]
+transform_format = 1
+mesh = ExtResource("8_15wb7")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_15wb7"]
+
 [node name="Level2" type="Node3D"]
-script = ExtResource("1_7dov7")
+script = ExtResource("1_15wb7")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ehv2h")
@@ -64,16 +92,17 @@ transform = Transform3D(-0.976503, 0, 0.215502, -0.0152578, 0.99749, -0.0691375,
 
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.842942, 0.138119, -0.519973, 0.0757339, 0.926398, 0.368852, 0.532647, -0.3503, 0.770439, -5.38126, 6.72744, 16.7764)
+transform = Transform3D(1, 0, 0, 0, 0.827169, 0.561953, 0, -0.561953, 0.827169, -3.24158, 8.36213, 8.32141)
 fov = 54.4395
 script = ExtResource("3_ehv2h")
 metadata/_custom_type_script = "uid://b8s62d4cpy1ic"
 
 [node name="SuneikoTreisMill" parent="." instance=ExtResource("4_15wb7")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, 3)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.47968, 1.5, 0.215895)
 
 [node name="GridMap" type="GridMap" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.5, 0, 0.5)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 mesh_library = ExtResource("5_7dov7")
 physics_material = SubResource("PhysicsMaterial_5b03i")
 cell_size = Vector3(1, 1, 1)
@@ -90,3 +119,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5, 0)
 
 [node name="GROW!2" parent="Grows" instance=ExtResource("8_7dov7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 13)
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_xbcdb")
+cast_shadow = 0
+ignore_occlusion_culling = true
+gi_mode = 0
+multimesh = SubResource("MultiMesh_s77qv")
+script = ExtResource("9_eoq84")
+blades_per_tile = 2000
+
+[node name="Death" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.62769, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Death"]
+shape = SubResource("WorldBoundaryShape3D_15wb7")

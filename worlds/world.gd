@@ -54,4 +54,5 @@ func _on_exit_body_entered(maybeASnaker3000):
 
 
 func _on_snaker_3000_died(body):
-	get_tree().reload_current_scene()
+	SceneTransition.change_scene(get_path())
+	

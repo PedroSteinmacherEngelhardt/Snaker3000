@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://c4n3rq4m2f585"]
+[gd_scene load_steps=18 format=3 uid="uid://c4n3rq4m2f585"]
 
 [ext_resource type="Script" uid="uid://yxq2e8yaasay" path="res://worlds/world.gd" id="1_12do3"]
 [ext_resource type="PackedScene" uid="uid://n4k8y5mn6dde" path="res://snaker_3000/snaker_3000.tscn" id="1_m138w"]
 [ext_resource type="Shader" uid="uid://cv4bhbh8t1jmm" path="res://assets/shaders/test_word.gdshader" id="1_wp1yw"]
 [ext_resource type="MeshLibrary" uid="uid://ctv83iu7v76bi" path="res://assets/meshlibari.tres" id="2_c7htk"]
 [ext_resource type="Script" uid="uid://b8s62d4cpy1ic" path="res://snakegame/camera_3d.gd" id="3_c7htk"]
+[ext_resource type="PackedScene" uid="uid://p6dx2f0uple7" path="res://utils/exit/exit.tscn" id="3_iw727"]
 [ext_resource type="ArrayMesh" uid="uid://8w28285u0d0j" path="res://assets/grass_straw.obj" id="6_3euow"]
 [ext_resource type="Shader" uid="uid://d2a3mt0rn1gt5" path="res://assets/shaders/grass.gdshader" id="6_aprxe"]
 [ext_resource type="Script" uid="uid://cv8c156u5d56u" path="res://grass_multimesh.gd" id="8_5rksg"]
@@ -49,17 +50,9 @@ sky = SubResource("Sky_12do3")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_fa4vq"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_12do3"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3euow"]
-albedo_color = Color(1, 1, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_aprxe"]
-material = SubResource("StandardMaterial3D_3euow")
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5rksg"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iw727"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5rksg"]
 seamless = true
 seamless_blend_skirt = 0.7
 normalize = false
@@ -70,7 +63,7 @@ render_priority = 0
 shader = ExtResource("6_aprxe")
 shader_parameter/albedo1 = Color(0, 1, 1, 1)
 shader_parameter/albedo2 = Color(0, 0, 1, 1)
-shader_parameter/noise = SubResource("NoiseTexture2D_iw727")
+shader_parameter/noise = SubResource("NoiseTexture2D_5rksg")
 shader_parameter/noiseScale = 10.0
 shader_parameter/player_pos = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/interact_power = 0.5
@@ -92,14 +85,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Death"]
 shape = SubResource("WorldBoundaryShape3D_fa4vq")
 
-[node name="Exit" type="Area3D" parent="."]
+[node name="Exit" parent="." instance=ExtResource("3_iw727")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit"]
-shape = SubResource("SphereShape3D_12do3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Exit/CollisionShape3D"]
-mesh = SubResource("SphereMesh_aprxe")
 
 [node name="Spawn" type="Marker3D" parent="."]
 unique_name_in_owner = true
@@ -144,4 +131,3 @@ multimesh = SubResource("MultiMesh_12do3")
 script = ExtResource("8_5rksg")
 
 [connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]
-[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]

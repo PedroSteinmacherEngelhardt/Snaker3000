@@ -47,7 +47,7 @@ void fragment() {
         if (world_vert.x >= player.x - 0.5 && world_vert.x <= player.x + 0.5 &&
             world_vert.z >= player.z - 0.5 && world_vert.z <= player.z + 0.5 &&
             world_vert.y < player.y) { // Only darken if below the cube
-            shadowFactor *= 0.5; // Reduce brightness
+            shadowFactor *= 0.0; // Reduce brightness
         }
     }
 
