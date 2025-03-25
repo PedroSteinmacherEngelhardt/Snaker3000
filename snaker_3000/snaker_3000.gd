@@ -39,8 +39,8 @@ func _on_movement_input(direction: Vector3):
 	for s in _segments:
 		s.global_position = (s.global_position.snapped(Vector3.ONE) * Vector3(1,0,1)) + (s.global_position * Vector3(0,1,0))
 	if _should_grow == true:
-		_add_segment()
 		_should_grow = false
+		_add_segment(true)
 	_move(direction)
 
 
@@ -105,7 +105,7 @@ func _setup_segments():
 		_add_segment()
 
 
-func _add_segment():
+func _add_segment(wait = false):
 	var box: BoxMesh = BoxMesh.new()
 	box.size = Vector3.ONE
 	
@@ -136,10 +136,19 @@ func _add_segment():
 		init_pos = _segments[_segments.size() - 1].global_position
 	var pos = init_pos - direction
 	
-	_segments.append(collision)
+	if wait:
+		collision.disabled = false
+		pos = _segments.back().global_position
+	
 	add_child(collision)
 	collision.add_child(body)
 	collision.global_position = pos
+	
+	if wait and not $%Timer.is_stopped():
+		await get_tree().create_timer(0.2).timeout
+	
+	collision.disabled = false
+	_segments.append(collision)
 
 
 func _disable_process(value: bool):
